@@ -29,7 +29,7 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
     
     //MARK: - Helpers
     func configureUI() {
-        
+        view.backgroundColor = .white
     }
 }
 

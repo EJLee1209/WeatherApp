@@ -17,8 +17,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene) // SceneDelegate의 프로퍼티에 설정해줌
         
         let sceneCoordinator = SceneCoordinator(window: window!)
+        let weatherApi = WeatherApi()
+        let locationProvider = StaticLocationProvider()
         
-        let viewModel = WeatherViewModel()
+        let viewModel = WeatherViewModel(title: "", sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
         let scene = Scene.weather(viewModel)
         
         sceneCoordinator.transition(to: scene, using: .root, animated: false)

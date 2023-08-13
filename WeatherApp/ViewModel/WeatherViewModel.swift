@@ -7,6 +7,8 @@
 
 import Foundation
 
-class WeatherViewModel {
+class WeatherViewModel: CommonViewModel {
+    
+    
     
 }
