@@ -36,6 +36,11 @@
 		CF61E8742A88CC060046BA30 /* CommonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8732A88CC060046BA30 /* CommonViewModel.swift */; };
 		CF61E8762A88CC550046BA30 /* LocationProviderType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8752A88CC550046BA30 /* LocationProviderType.swift */; };
 		CF61E8782A88CCBB0046BA30 /* StaticLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8772A88CCBB0046BA30 /* StaticLocationProvider.swift */; };
+		CF61E87F2A88DE700046BA30 /* CurrentWeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E87E2A88DE700046BA30 /* CurrentWeatherCell.swift */; };
+		CF61E8822A88DF430046BA30 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = CF61E8812A88DF430046BA30 /* SnapKit */; };
+		CF61E8842A88E43A0046BA30 /* ForecastHourlyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8832A88E43A0046BA30 /* ForecastHourlyCell.swift */; };
+		CF61E8862A88E60C0046BA30 /* UIImage+Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8852A88E60C0046BA30 /* UIImage+Weather.swift */; };
+		CF61E8882A88E66C0046BA30 /* ForecastDailyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8872A88E66C0046BA30 /* ForecastDailyCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +71,10 @@
 		CF61E8732A88CC060046BA30 /* CommonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonViewModel.swift; sourceTree = "<group>"; };
 		CF61E8752A88CC550046BA30 /* LocationProviderType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProviderType.swift; sourceTree = "<group>"; };
 		CF61E8772A88CCBB0046BA30 /* StaticLocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticLocationProvider.swift; sourceTree = "<group>"; };
+		CF61E87E2A88DE700046BA30 /* CurrentWeatherCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherCell.swift; sourceTree = "<group>"; };
+		CF61E8832A88E43A0046BA30 /* ForecastHourlyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastHourlyCell.swift; sourceTree = "<group>"; };
+		CF61E8852A88E60C0046BA30 /* UIImage+Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Weather.swift"; sourceTree = "<group>"; };
+		CF61E8872A88E66C0046BA30 /* ForecastDailyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDailyCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +86,7 @@
 				CF61E8612A88C3570046BA30 /* RxDataSources in Frameworks */,
 				CF61E8522A88B9E70046BA30 /* RxRelay in Frameworks */,
 				CF61E8502A88B9E70046BA30 /* RxCocoa in Frameworks */,
+				CF61E8822A88DF430046BA30 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,6 +164,7 @@
 		CF61E83B2A88B55A0046BA30 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CF61E87D2A88DE550046BA30 /* Cell */,
 				CF61E8402A88B6EE0046BA30 /* WeatherViewController.swift */,
 				CF61E8422A88B7240046BA30 /* SearchLocationViewController.swift */,
 			);
@@ -184,8 +195,19 @@
 			isa = PBXGroup;
 			children = (
 				CF61E86D2A88C6740046BA30 /* CLLocation+HotPlace.swift */,
+				CF61E8852A88E60C0046BA30 /* UIImage+Weather.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		CF61E87D2A88DE550046BA30 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CF61E87E2A88DE700046BA30 /* CurrentWeatherCell.swift */,
+				CF61E8832A88E43A0046BA30 /* ForecastHourlyCell.swift */,
+				CF61E8872A88E66C0046BA30 /* ForecastDailyCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +231,7 @@
 				CF61E8512A88B9E70046BA30 /* RxRelay */,
 				CF61E8532A88B9E70046BA30 /* RxSwift */,
 				CF61E8602A88C3570046BA30 /* RxDataSources */,
+				CF61E8812A88DF430046BA30 /* SnapKit */,
 			);
 			productName = WeatherApp;
 			productReference = CF61E81E2A88B4DE0046BA30 /* WeatherApp.app */;
@@ -241,6 +264,7 @@
 			packageReferences = (
 				CF61E84E2A88B9E70046BA30 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				CF61E85F2A88C3570046BA30 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				CF61E8802A88DF430046BA30 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = CF61E81F2A88B4DE0046BA30 /* Products */;
 			projectDirPath = "";
@@ -272,16 +296,20 @@
 				CF61E8762A88CC550046BA30 /* LocationProviderType.swift in Sources */,
 				CF61E86B2A88C5BA0046BA30 /* Constants.swift in Sources */,
 				CF61E83F2A88B6360046BA30 /* Scene.swift in Sources */,
+				CF61E8882A88E66C0046BA30 /* ForecastDailyCell.swift in Sources */,
 				CF61E8492A88B8730046BA30 /* WeatherViewModel.swift in Sources */,
 				CF61E8412A88B6EE0046BA30 /* WeatherViewController.swift in Sources */,
 				CF61E8562A88BA670046BA30 /* SceneCoordinator.swift in Sources */,
 				CF61E84B2A88B89B0046BA30 /* SearchLocationViewModel.swift in Sources */,
 				CF61E8692A88C52C0046BA30 /* WeatherData.swift in Sources */,
+				CF61E8842A88E43A0046BA30 /* ForecastHourlyCell.swift in Sources */,
+				CF61E8862A88E60C0046BA30 /* UIImage+Weather.swift in Sources */,
 				CF61E82C2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld in Sources */,
 				CF61E8782A88CCBB0046BA30 /* StaticLocationProvider.swift in Sources */,
 				CF61E8702A88C6930046BA30 /* WeatherApiType.swift in Sources */,
 				CF61E86E2A88C6740046BA30 /* CLLocation+HotPlace.swift in Sources */,
 				CF61E8452A88B7840046BA30 /* TransitionModel.swift in Sources */,
+				CF61E87F2A88DE700046BA30 /* CurrentWeatherCell.swift in Sources */,
 				CF61E8632A88C38C0046BA30 /* Forecast.swift in Sources */,
 				CF61E8742A88CC060046BA30 /* CommonViewModel.swift in Sources */,
 				CF61E8432A88B7240046BA30 /* SearchLocationViewController.swift in Sources */,
@@ -524,6 +552,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CF61E8802A88DF430046BA30 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -546,6 +582,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CF61E85F2A88C3570046BA30 /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		CF61E8812A88DF430046BA30 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF61E8802A88DF430046BA30 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

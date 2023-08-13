@@ -6,22 +6,27 @@
 //
 
 import Foundation
-import RxRelay
 import RxSwift
+import RxCocoa
+import RxRelay
 
 class CommonViewModel: NSObject {
     
-    let title: BehaviorRelay<String>
+    let bag = DisposeBag()
+    let address = BehaviorRelay<String>(value: "")
     
     let sceneCoordinator: SceneCoordinatorType
     let weatherApi: WeatherApiType
     let locationProvider: LocationProviderType
     
-    init(title: String, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
-        self.title = BehaviorRelay(value: title)
+    init(sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
         self.sceneCoordinator = sceneCoordinator
         self.weatherApi = weatherApi
         self.locationProvider = locationProvider
+        
+        locationProvider.currentAddress()
+            .bind(to: self.address)
+            .disposed(by: bag)
     }
     
 }

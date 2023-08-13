@@ -6,14 +6,25 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class WeatherViewController: UITabBarController, ViewModelBindableType {
     
     //MARK: - Properties
+    
+    private let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        return cv
+    }()
+    
     var viewModel: WeatherViewModel!
+    let bag = DisposeBag()
     
     func bindViewModel() {
         // ViewBinding
+        
         
     }
     

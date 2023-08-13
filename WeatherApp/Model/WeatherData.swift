@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxDataSources
 
-struct WeatherData: WeatherDataType {
+struct WeatherData: WeatherDataType, Equatable {
     var date: Date?
     var icon: String
     var description: String

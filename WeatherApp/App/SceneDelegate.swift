@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let weatherApi = WeatherApi()
         let locationProvider = StaticLocationProvider()
         
-        let viewModel = WeatherViewModel(title: "", sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+        let viewModel = WeatherViewModel(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
         let scene = Scene.weather(viewModel)
         
         sceneCoordinator.transition(to: scene, using: .root, animated: false)
