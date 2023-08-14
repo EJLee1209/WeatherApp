@@ -24,6 +24,22 @@ class ForecastDailyCell: UICollectionViewCell {
         return iv
     }()
     
+    private let popLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "light_blue")
+        label.font = .boldSystemFont(ofSize: 14)
+        return label
+    }()
+    
+    private lazy var weatherStack: UIStackView = {
+        let sv = UIStackView(arrangedSubviews: [weatherImageView, popLabel])
+        sv.axis = .vertical
+        sv.spacing = 4
+        sv.alignment = .center
+        sv.distribution = .fill
+        return sv
+    }()
+    
     private let tempLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -32,7 +48,7 @@ class ForecastDailyCell: UICollectionViewCell {
     }()
     
     private lazy var stack: UIStackView = {
-        let sv = UIStackView(arrangedSubviews: [weatherImageView, tempLabel])
+        let sv = UIStackView(arrangedSubviews: [weatherStack, tempLabel])
         sv.axis = .horizontal
         sv.spacing = 8
         sv.distribution = .equalSpacing
@@ -64,10 +80,6 @@ class ForecastDailyCell: UICollectionViewCell {
             make.top.bottom.equalToSuperview()
             make.right.equalToSuperview().inset(10)
         }
-        
-        weatherImageView.snp.makeConstraints { make in
-            make.height.width.equalTo(80)
-        }
     }
     
     func configure(data: WeatherDataType, dateFormatter: DateFormatter, tempFormatter: NumberFormatter) {
@@ -83,6 +95,12 @@ class ForecastDailyCell: UICollectionViewCell {
         let maxMinTemp = "최고:\(maxTemp)° 최저:\(minTemp)°"
         
         tempLabel.text = maxMinTemp
+        
+        if let pop = data.pop, pop > 0.0 {
+            print("강수 확률 : \(pop*100)")
+            popLabel.text = "\(pop * 100)%"
+        }
+        
         
         let urlStr = "https://openweathermap.org/img/wn/\(data.icon)@2x.png"
         guard let url = URL(string: urlStr) else { return }

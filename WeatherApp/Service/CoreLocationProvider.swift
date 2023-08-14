@@ -30,7 +30,7 @@ class CoreLocationProvider: LocationProviderType {
         locationManager.pausesLocationUpdatesAutomatically = false
         
         locationManager.rx.didUpdateLocation
-            .throttle(.seconds(10), scheduler: MainScheduler.instance) // 위치 정보 업데이트를 5초 주기로 제한
+            .throttle(.seconds(5), scheduler: MainScheduler.instance) // 위치 정보 업데이트를 5초 주기로 제한
             .map { $0.last ?? CLLocation.gangnamStation }
             .bind(to: location)
             .disposed(by: bag)
