@@ -41,4 +41,3 @@ extension Reactive where Base: MKLocalSearchCompleter {
     
 }
 
-

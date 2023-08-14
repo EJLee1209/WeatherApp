@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import MapKit
 
 final class SearchViewController: UIViewController {
     
@@ -52,6 +53,19 @@ final class SearchViewController: UIViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: bag)
+        
+        tableView.rx.modelSelected(MKLocalSearchCompletion.self)
+            .flatMap { $0 }
+            .bind(to: viewModel.selectedItem)
+            .disposed(by: bag)
+        
+        viewModel.selectedLocation
+            .subscribe(onNext: { location in
+                print(location)
+            })
+            .disposed(by: bag)
+            
+        
     }
     
     func configureUI() {

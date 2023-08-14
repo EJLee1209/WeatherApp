@@ -50,6 +50,7 @@
 		CF61E8882A88E66C0046BA30 /* ForecastDailyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8872A88E66C0046BA30 /* ForecastDailyCell.swift */; };
 		CFC88E292A8A5A4B00A63733 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E282A8A5A4B00A63733 /* SearchViewController.swift */; };
 		CFC88E2D2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E2C2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift */; };
+		CFC88E2F2A8A72C800A63733 /* MKLocalSearchCompletion+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		CF61E8872A88E66C0046BA30 /* ForecastDailyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDailyCell.swift; sourceTree = "<group>"; };
 		CFC88E282A8A5A4B00A63733 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CFC88E2C2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMKLocalSearchCompleterDelegateProxy.swift; sourceTree = "<group>"; };
+		CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKLocalSearchCompletion+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 				CF61E86D2A88C6740046BA30 /* CLLocation+HotPlace.swift */,
 				CF61E8852A88E60C0046BA30 /* UIImage+Weather.swift */,
 				CF2DC1682A89F880004E88C2 /* Reactive+Background.swift */,
+				CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				CF61E8652A88C4460046BA30 /* CurrentWeather.swift in Sources */,
 				CF61E84D2A88B9CE0046BA30 /* SceneCoordinatorType.swift in Sources */,
 				CFC88E2D2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */,
+				CFC88E2F2A8A72C800A63733 /* MKLocalSearchCompletion+.swift in Sources */,
 				CF61E8472A88B7E70046BA30 /* ViewModelBindableType.swift in Sources */,
 				CF61E8722A88C70F0046BA30 /* WeatherApi.swift in Sources */,
 				CF61E8222A88B4DE0046BA30 /* AppDelegate.swift in Sources */,
