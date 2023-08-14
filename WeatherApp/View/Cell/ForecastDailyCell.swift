@@ -35,7 +35,7 @@ class ForecastDailyCell: UICollectionViewCell {
         let sv = UIStackView(arrangedSubviews: [weatherImageView, tempLabel])
         sv.axis = .horizontal
         sv.spacing = 8
-        sv.distribution = .fill
+        sv.distribution = .equalSpacing
         return sv
     }()
     
@@ -60,7 +60,7 @@ class ForecastDailyCell: UICollectionViewCell {
         }
         contentView.addSubview(stack)
         stack.snp.makeConstraints { make in
-            make.left.equalTo(dayLabel.snp.right)
+            make.left.equalTo(dayLabel.snp.right).offset(20)
             make.top.bottom.equalToSuperview()
             make.right.equalToSuperview().inset(10)
         }
@@ -74,11 +74,15 @@ class ForecastDailyCell: UICollectionViewCell {
         dateFormatter.dateFormat = "E"
         dayLabel.text = dateFormatter.string(for: data.date)
         
-//        weatherImageView.image = UIImage.from(name: data.icon)
+        let max = data.maxTemperature ?? 0.0
+        let min = data.minTemperature ?? 0.0
         
-        let tempStr = tempFormatter.string(for: data.temperature) ?? "-"
+        let maxTemp = tempFormatter.string(for: max) ?? "-"
+        let minTemp = tempFormatter.string(for: min) ?? "-"
         
-        tempLabel.text = "\(tempStr)°"
+        let maxMinTemp = "최고:\(maxTemp)° 최저:\(minTemp)°"
+        
+        tempLabel.text = maxMinTemp
         
         let urlStr = "https://openweathermap.org/img/wn/\(data.icon)@2x.png"
         guard let url = URL(string: urlStr) else { return }

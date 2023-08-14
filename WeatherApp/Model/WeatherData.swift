@@ -74,19 +74,19 @@ extension WeatherData {
             
             let dateKey = dateFormatter.string(from: date)
             
-            if var key = dict[dateKey] {
-                key.append(data)
+            if let _ = dict[dateKey] {
+                dict[dateKey]!.append(data)
             } else {
                 dict[dateKey] = [data]
             }
         }
         
-        print(dict)
+        
         
         var dailyWeather: [WeatherDataType] = []
         
         for (_, values) in dict {
-            var maxTemp = Double(-Int.max) // 최고 기온
+            var maxTemp = -Double(Int.max) // 최고 기온
             var minTemp = Double(Int.max) // 최저 기온
             
             var pop = 0.0 // 강수 확률
@@ -99,7 +99,7 @@ extension WeatherData {
                 }
             }
             
-            let day = WeatherData(code: nil, date: values.first!.date!, icon: values.first!.icon, description: values.first!.description, temperature: values.first!.temperature, maxTemperature: maxTemp, minTemperature: minTemp, pop: pop)
+            let day = WeatherData(code: nil, date: values.first!.date!, icon: values.first!.icon, description: "", temperature: 0, maxTemperature: maxTemp, minTemperature: minTemp, pop: pop)
             
             dailyWeather.append(day)
         }
