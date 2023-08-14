@@ -57,9 +57,17 @@ class WeatherViewModel: CommonViewModel {
                 
                 let dailyWeather = WeatherData.dailyWeatherData(data: forecast, dateFormatter: WeatherViewModel.dateFormatter)
                 
+                var forecast30Hour = [WeatherDataType]()
+                
+                if forecast.count > 10 {
+                    for i in 0...10 {
+                        forecast30Hour.append(forecast[i])
+                    }
+                }
+                
                 return [
                     SectionModel(model: 0, items: currentWeatherList), // 섹션 0, 현재 날씨
-                    SectionModel(model: 1, items: forecast as! [WeatherData]), // 섹션 1, 일기 예보(5일, 3시간 간격)
+                    SectionModel(model: 1, items: forecast30Hour as! [WeatherData]), // 섹션 1, 일기 예보(30시간, 3시간 간격)
                     SectionModel(model: 2, items: dailyWeather as! [WeatherData]), // 섹션 2, 일기 예보(5일, 1일 간격)
                 ]
             }
@@ -68,7 +76,7 @@ class WeatherViewModel: CommonViewModel {
     
     // CollectionView RxDataSource
     lazy var dataSource: RxCollectionViewSectionedAnimatedDataSource<SectionModel> = {
-        let ds = RxCollectionViewSectionedAnimatedDataSource<SectionModel> { dataSource, collectionView, indexPath, data -> UICollectionViewCell in
+        let ds = RxCollectionViewSectionedAnimatedDataSource<SectionModel>(configureCell: { dataSource, collectionView, indexPath, data -> UICollectionViewCell in
             
             // 섹션 분기 처리
             switch indexPath.section {
@@ -88,7 +96,17 @@ class WeatherViewModel: CommonViewModel {
                 return cell
             }
             
-        }
+        }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath -> UICollectionReusableView in
+            
+            switch kind {
+            case UICollectionView.elementKindSectionHeader:
+                let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as! SectionHeaderView
+                return header
+            default:
+                fatalError()
+            }
+            
+        })
         
         
         return ds

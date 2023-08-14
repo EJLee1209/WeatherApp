@@ -25,6 +25,7 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
         cv.register(CurrentWeatherCell.self, forCellWithReuseIdentifier: CurrentWeatherCell.identifier)
         cv.register(ForecastHourlyCell.self, forCellWithReuseIdentifier: ForecastHourlyCell.identifier)
         cv.register(ForecastDailyCell.self, forCellWithReuseIdentifier: ForecastDailyCell.identifier)
+        cv.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
         return cv
     }()
     
@@ -62,7 +63,9 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
         
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
         }
         
     }
@@ -82,7 +85,7 @@ extension WeatherViewController {
             case 0:
                 let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(270))
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
                 
                 let section = NSCollectionLayoutSection(group: group)
@@ -97,11 +100,11 @@ extension WeatherViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 10
                 section.orthogonalScrollingBehavior = .continuous
-                section.contentInsets = .init(top: 10, leading: 20, bottom: 10, trailing: 20)
+                section.contentInsets = .init(top: 30, leading: 20, bottom: 10, trailing: 20)
                 
                 // 섹션 배경 생성
-//                let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundView.background)
-//                section.decorationItems = [sectionBackground]
+                let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundView.background)
+                section.decorationItems = [sectionBackground]
                 
                 // 섹션에 헤더 추가
 //                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(30))
@@ -116,23 +119,27 @@ extension WeatherViewController {
                 
                 return section
             case 2:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width - 40), heightDimension: .absolute(80))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(self.collectionView.frame.width), heightDimension: .absolute(80))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width - 40), heightDimension: .absolute(80))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(self.collectionView.frame.width), heightDimension: .absolute(80))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 0, leading: 20, bottom: 20, trailing: 20)
+                section.contentInsets = .init(top: 20, leading: 0, bottom: 20, trailing: 0)
                 
                 // 섹션에 헤더 추가
-//                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44)) // Header height is estimated
-//                let header = NSCollectionLayoutBoundarySupplementaryItem(
-//                    layoutSize: headerSize,
-//                    elementKind: UICollectionView.elementKindSectionHeader,
-//                    alignment: .topLeading
-//                )
-//
-//                section.boundarySupplementaryItems = [header]
+                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(30)) // Header height is estimated
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .topLeading
+                )
+
+                section.boundarySupplementaryItems = [header]
+                
+                // 섹션 배경 생성
+                let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: SectionBackgroundView.background)
+                section.decorationItems = [sectionBackground]
                 
                 return section
             default:
@@ -140,7 +147,8 @@ extension WeatherViewController {
             }
         }
         
-//        layout.register(SectionBackgroundView.self, forDecorationViewOfKind: SectionBackgroundView.background)
+        layout.register(SectionBackgroundView.self, forDecorationViewOfKind: SectionBackgroundView.background)
+        
         return layout
     }
 }
