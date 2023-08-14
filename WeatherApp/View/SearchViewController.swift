@@ -48,10 +48,9 @@ final class SearchViewController: UIViewController {
     func bindViewModel() {
         // ViewBinding
         
-        viewModel.results
-            .subscribe(onNext: { result in
-                print(result)
-            })
+        viewModel.searchResults
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: bag)
     }
     
