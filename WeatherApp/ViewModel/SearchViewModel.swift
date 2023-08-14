@@ -21,30 +21,34 @@ class SearchViewModel: CommonViewModel {
     
     let searchResults: BehaviorRelay<[SearchSectionModel]> = .init(value: []) // 검색 결과를 담을 변수
     
-    let selectedItem = PublishRelay<MKLocalSearchCompletion>()
-    let selectedLocation = PublishRelay<CLLocation>()
+    let selectedItem = PublishRelay<MKLocalSearchCompletion>() // 선택한 Cell item
+    let selectedLocation = PublishRelay<CLLocation>() // 선택한 Cell의 위치 정보
     
     override init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
         super.init(title: title, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
         
         searchCompleter.resultTypes = .address
         
+        // 키워드 바인딩
         keyword
             .throttle(.milliseconds(1000), scheduler: MainScheduler.instance) // 1초에 한번씩만
             .bind(to: searchCompleter.rx.queryFragment)
             .disposed(by: bag)
         
+        // 장소 검색 결과 바인딩
         searchCompleter.rx.didUpdateResults
             .map { [SearchSectionModel(model: 0, items: $0)] }
             .bind(to: searchResults)
             .disposed(by: bag)
         
+        // 선택된 Cell item 방출시 search 메소드 호출 (위치 정보 요청)
         selectedItem
             .subscribe(onNext: { [weak self] item in
                 self?.search(for: item)
             })
             .disposed(by: bag)
         
+        // 선택된 Cell의 위치 데이터 방출(위치 정보 요청에 대한 응답 방출) 시 해당 위치의 날씨 화면을 보여주는 메소드 호출
         selectedLocation
             .subscribe(onNext: { [weak self] location in
                 self?.makeWeatherModalViewFromSelectedItem(location: location)
@@ -52,26 +56,32 @@ class SearchViewModel: CommonViewModel {
             .disposed(by: bag)
     }
     
+    // 검색 결과 TableView에 사용할 RxDataSource
     let dataSource: RxTableViewSectionedAnimatedDataSource<SearchSectionModel> = {
         
         let ds = RxTableViewSectionedAnimatedDataSource<SearchSectionModel> { dataSource, tableView, indexPath, data -> UITableViewCell in
             
+            // 단일 섹션이라 섹션 분기 처리 필요 없음
             let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell", for: indexPath)
             cell.textLabel?.text = data.title
             return cell
+            
         }
         
         return ds
     }()
     
+    // 검색 결과 item을 토대로 위치 정보를 요청하는 메소드
     private func search(for suggestedCompletion: MKLocalSearchCompletion) {
         let searchRequest = MKLocalSearch.Request(completion: suggestedCompletion)
         
+        // 위치 정보 응답을 방출하는 Observable을 selectedLocation에 바인딩
         search(using: searchRequest)
             .bind(to: selectedLocation)
             .disposed(by: bag)
     }
     
+    // 요청한 위치 정보의 응답을 방출하는 Observable 리턴
     private func search(using searchRequest: MKLocalSearch.Request) -> Observable<CLLocation> {
         // 검색 지역 설정
         searchRequest.region = MKCoordinateRegion(.world)
@@ -107,6 +117,7 @@ class SearchViewModel: CommonViewModel {
         
     }
     
+    // 위치 정보 응답 발생시 호출되며, location 정보로 날씨 예보 화면을 보여줌
     private func makeWeatherModalViewFromSelectedItem(location: CLLocation) {
         let weatherViewModel = WeatherViewModel(location: location, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
         let weatherScene = Scene.weather(weatherViewModel)
