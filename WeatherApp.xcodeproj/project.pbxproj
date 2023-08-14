@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF2DC1672A89DAEE004E88C2 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CF2DC1662A89DAEE004E88C2 /* SDWebImage */; };
 		CF61E8222A88B4DE0046BA30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */; };
 		CF61E8242A88B4DE0046BA30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */; };
 		CF61E82C2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF61E82A2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld */; };
@@ -82,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF2DC1672A89DAEE004E88C2 /* SDWebImage in Frameworks */,
 				CF61E8542A88B9E70046BA30 /* RxSwift in Frameworks */,
 				CF61E8612A88C3570046BA30 /* RxDataSources in Frameworks */,
 				CF61E8522A88B9E70046BA30 /* RxRelay in Frameworks */,
@@ -232,6 +234,7 @@
 				CF61E8532A88B9E70046BA30 /* RxSwift */,
 				CF61E8602A88C3570046BA30 /* RxDataSources */,
 				CF61E8812A88DF430046BA30 /* SnapKit */,
+				CF2DC1662A89DAEE004E88C2 /* SDWebImage */,
 			);
 			productName = WeatherApp;
 			productReference = CF61E81E2A88B4DE0046BA30 /* WeatherApp.app */;
@@ -265,6 +268,7 @@
 				CF61E84E2A88B9E70046BA30 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				CF61E85F2A88C3570046BA30 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				CF61E8802A88DF430046BA30 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				CF2DC1652A89DAEE004E88C2 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = CF61E81F2A88B4DE0046BA30 /* Products */;
 			projectDirPath = "";
@@ -464,6 +468,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -495,6 +500,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -536,6 +542,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		CF2DC1652A89DAEE004E88C2 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		CF61E84E2A88B9E70046BA30 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -563,6 +577,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CF2DC1662A89DAEE004E88C2 /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF2DC1652A89DAEE004E88C2 /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
 		CF61E84F2A88B9E70046BA30 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CF61E84E2A88B9E70046BA30 /* XCRemoteSwiftPackageReference "RxSwift" */;

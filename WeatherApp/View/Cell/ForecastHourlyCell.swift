@@ -40,6 +40,8 @@ class ForecastHourlyCell: UICollectionViewCell {
         return sv
     }()
     
+    static let identifier = "ForecastHourlyCell"
+    
     //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -64,7 +66,7 @@ class ForecastHourlyCell: UICollectionViewCell {
     }
     
     func configure(data: WeatherDataType, dateFormatter: DateFormatter, tempFormatter: NumberFormatter) {
-        dateFormatter.dateFormat = "a hh"
+        dateFormatter.dateFormat = "a hh시"
         timeLabel.text = dateFormatter.string(for: data.date)
         
         weatherImageView.image = UIImage.from(name: data.icon)

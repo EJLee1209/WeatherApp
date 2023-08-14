@@ -19,6 +19,8 @@ class CurrentWeatherCell: UICollectionViewCell {
         return label
     }()
     
+    static let identifier = "CurrentWeatherCell"
+    
     //MARK: - LifeCycle
     
     override init(frame: CGRect) {

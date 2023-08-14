@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class ForecastDailyCell: UICollectionViewCell {
     
@@ -37,6 +38,8 @@ class ForecastDailyCell: UICollectionViewCell {
         sv.distribution = .fill
         return sv
     }()
+    
+    static let identifier = "ForecastDailyCell"
     
     //MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -71,9 +74,13 @@ class ForecastDailyCell: UICollectionViewCell {
         dateFormatter.dateFormat = "E"
         dayLabel.text = dateFormatter.string(for: data.date)
         
-        weatherImageView.image = UIImage.from(name: data.icon)
+//        weatherImageView.image = UIImage.from(name: data.icon)
         
         let tempStr = tempFormatter.string(for: data.temperature) ?? "-"
         tempLabel.text = "\(tempStr)°"
+        
+        let urlStr = "https://openweathermap.org/img/wn/\(data.icon)@2x.png"
+        guard let url = URL(string: urlStr) else { return }
+        weatherImageView.sd_setImage(with: url)
     }
 }
