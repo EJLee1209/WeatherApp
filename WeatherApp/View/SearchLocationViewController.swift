@@ -13,15 +13,25 @@ import RxCocoa
 class SearchLocationViewController: UIViewController, ViewModelBindableType {
     
     //MARK: - Properties
+    private lazy var searchController = UISearchController(searchResultsController: SearchViewController(viewModel: viewModel))
     
-    let bag = DisposeBag()
+    private let bag = DisposeBag()
     
-    var viewModel: SearchLocationViewModel!
+    var viewModel: SearchViewModel!
+    
     func bindViewModel() {
         // 뷰 바인딩
         viewModel.title
             .bind(to: rx.title)
             .disposed(by: bag)
+        
+        searchController.searchBar.rx.text
+            .compactMap { $0 }
+            .bind(to: viewModel.keyword)
+            .disposed(by: bag)
+        
+        
+        
     }
     
     //MARK: - LifeCycle
@@ -29,6 +39,9 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         
         configureUI()
+        setupSearchBar()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,5 +63,10 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
         
     }
     
+    private func setupSearchBar() {
+        navigationItem.searchController = searchController
+        searchController.searchBar.autocapitalizationType = .none
+        searchController.searchBar.placeholder = "도시 또는 공항 검색"
+    }
     
 }

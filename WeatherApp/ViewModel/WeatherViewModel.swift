@@ -55,7 +55,7 @@ class WeatherViewModel: CommonViewModel {
             .asDriver(onErrorJustReturn: [])
     }
     
-    func makeSectionModelList(currentWeather: WeatherDataType?, forecast: [WeatherDataType]) -> [SectionModel] {
+    private func makeSectionModelList(currentWeather: WeatherDataType?, forecast: [WeatherDataType]) -> [SectionModel] {
         var currentWeatherList = [WeatherData]()
         
         var dailyWeather = WeatherData.dailyWeatherData(data: forecast, dateFormatter: WeatherViewModel.dateFormatter)
@@ -128,7 +128,7 @@ class WeatherViewModel: CommonViewModel {
     func makeLocationListButtonAction() -> CocoaAction {
         return CocoaAction { [weak self] _ in
             guard let self = self else { return Observable.empty() }
-            let searchLocationViewModel = SearchLocationViewModel(
+            let searchLocationViewModel = SearchViewModel(
                 title: "날씨",
                 sceneCoordinator: self.sceneCoordinator,
                 weatherApi: self.weatherApi,

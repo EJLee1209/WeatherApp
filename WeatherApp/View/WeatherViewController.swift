@@ -60,6 +60,7 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
             .disposed(by: bag)
         
         locationListButton.rx.action = viewModel.makeLocationListButtonAction()
+        
     }
     
     

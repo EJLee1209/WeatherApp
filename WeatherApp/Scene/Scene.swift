@@ -9,7 +9,7 @@ import UIKit
 
 enum Scene {
     case weather(WeatherViewModel)
-    case searchLocation(SearchLocationViewModel)
+    case searchLocation(SearchViewModel)
 }
 
 extension Scene {
