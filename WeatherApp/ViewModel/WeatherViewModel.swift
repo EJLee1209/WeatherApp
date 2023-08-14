@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 import UIKit
 import Action
+import CoreLocation
 
 
 typealias SectionModel = AnimatableSectionModel<Int, WeatherData>
@@ -19,6 +20,29 @@ class WeatherViewModel: CommonViewModel {
     
     // 날씨 배경 이미지 이름 (Asset에 정의)
     var backgroundImageName = BehaviorRelay<String>(value: "bg_sunny")
+    
+    var location: CLLocation?
+    
+    var locationAddress: BehaviorRelay<String> = .init(value: "")
+    
+    
+    init(
+        title: String? = nil,
+        location: CLLocation? = nil,
+        sceneCoordinator: SceneCoordinatorType,
+        weatherApi: WeatherApiType,
+        locationProvider: LocationProviderType
+    ) {
+        super.init(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+        
+        self.location = location
+        
+        guard let location = location else { return }
+        
+        locationProvider.reverseGeoCodeLocation(location: location)
+            .bind(to: locationAddress)
+            .disposed(by: bag)
+    }
     
     static let tempFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -36,12 +60,24 @@ class WeatherViewModel: CommonViewModel {
     
     // 날씨 데이터, RxDataSource를 사용하기 위해서 SectionModel 사용
     var weatherData: Driver<[SectionModel]> {
-        return locationProvider.currentLocation()
-            .withUnretained(self)
-            .flatMap { viewModel, location in
-                viewModel.weatherApi.fetch(location: location)
-                    .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
-            }
+        var observable: Observable<(WeatherDataType?, [WeatherDataType])>
+        
+        if let location {
+            // 생성자로 받은 위치 정보가 있는 경우(장소 검색으로 화면 진입한 경우)
+            observable = weatherApi.fetch(location: location)
+        } else {
+            // 현재 위치로 날씨 검색
+            observable = locationProvider.currentLocation()
+                .withUnretained(self)
+                .flatMap { viewModel, location in
+                    viewModel.weatherApi.fetch(location: location)
+                        .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
+                }
+        }
+        
+        
+        return observable
+            .asDriver(onErrorJustReturn: (nil, []))
             .do(onNext: { [weak self] (weatherData, d) in
                 
                 guard let weatherData = weatherData else { return }
@@ -53,6 +89,7 @@ class WeatherViewModel: CommonViewModel {
                 return self?.makeSectionModelList(currentWeather: currentWeather, forecast: forecast)
             }
             .asDriver(onErrorJustReturn: [])
+        
     }
     
     private func makeSectionModelList(currentWeather: WeatherDataType?, forecast: [WeatherDataType]) -> [SectionModel] {
@@ -93,7 +130,7 @@ class WeatherViewModel: CommonViewModel {
             switch indexPath.section {
             case 0: // 섹션 0의 셀 정의
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CurrentWeatherCell.identifier, for: indexPath) as! CurrentWeatherCell
-                cell.configure(from: data, address: self.address.value, tempFormatter: WeatherViewModel.tempFormatter)
+                cell.configure(from: data, address: self.location == nil ? self.address.value : self.locationAddress.value, tempFormatter: WeatherViewModel.tempFormatter)
                 return cell
                 
             case 1: // 섹션 1의 셀 정의

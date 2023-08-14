@@ -58,12 +58,6 @@ final class SearchViewController: UIViewController {
             .flatMap { $0 }
             .bind(to: viewModel.selectedItem)
             .disposed(by: bag)
-        
-        viewModel.selectedLocation
-            .subscribe(onNext: { location in
-                print(location)
-            })
-            .disposed(by: bag)
             
         
     }

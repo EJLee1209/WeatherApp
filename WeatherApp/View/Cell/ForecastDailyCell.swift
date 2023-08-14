@@ -97,8 +97,7 @@ class ForecastDailyCell: UICollectionViewCell {
         tempLabel.text = maxMinTemp
         
         if let pop = data.pop, pop > 0.0 {
-            print("강수 확률 : \(pop*100)")
-            popLabel.text = "\(pop * 100)%"
+            popLabel.text = "\(Int(pop * 100))%"
         }
         
         

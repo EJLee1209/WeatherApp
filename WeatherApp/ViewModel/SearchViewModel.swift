@@ -44,6 +44,12 @@ class SearchViewModel: CommonViewModel {
                 self?.search(for: item)
             })
             .disposed(by: bag)
+        
+        selectedLocation
+            .subscribe(onNext: { [weak self] location in
+                self?.makeWeatherModalViewFromSelectedItem(location: location)
+            })
+            .disposed(by: bag)
     }
     
     let dataSource: RxTableViewSectionedAnimatedDataSource<SearchSectionModel> = {
@@ -99,6 +105,13 @@ class SearchViewModel: CommonViewModel {
             
         }
         
+    }
+    
+    private func makeWeatherModalViewFromSelectedItem(location: CLLocation) {
+        let weatherViewModel = WeatherViewModel(location: location, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+        let weatherScene = Scene.weather(weatherViewModel)
+        
+        sceneCoordinator.transition(to: weatherScene, using: .modal, animated: true)
     }
     
 }

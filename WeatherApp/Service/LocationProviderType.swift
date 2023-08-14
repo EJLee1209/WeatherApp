@@ -19,4 +19,7 @@ protocol LocationProviderType {
     @discardableResult
     func currentAddress() -> Observable<String>
     
+    @discardableResult
+    func reverseGeoCodeLocation(location: CLLocation) -> Observable<String>
+    
 }

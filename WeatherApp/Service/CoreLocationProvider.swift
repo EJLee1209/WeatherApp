@@ -35,25 +35,8 @@ class CoreLocationProvider: LocationProviderType {
             .bind(to: location)
             .disposed(by: bag)
         
-        location.flatMap { location in
-            return Observable<String>.create { observer in
-                let geocoder = CLGeocoder()
-                geocoder.reverseGeocodeLocation(location) { placemarks, error in
-                    if let place = placemarks?.first {
-                        if let gu = place.locality, let dong = place.subLocality {
-                            observer.onNext("\(gu) \(dong)")
-                        } else {
-                            observer.onNext(place.name ?? "알 수 없음")
-                        }
-                    } else {
-                        observer.onNext("알 수 없음")
-                    }
-                    
-                    observer.onCompleted()
-                }
-                
-                return Disposables.create()
-            }
+        location.flatMap { [weak self] location in
+            self?.reverseGeoCodeLocation(location: location) ?? Observable.just("알 수 없음")
         }
         .bind(to: address)
         .disposed(by: bag)
@@ -70,5 +53,25 @@ class CoreLocationProvider: LocationProviderType {
         return address.asObservable()
     }
     
-    
+    @discardableResult
+    func reverseGeoCodeLocation(location: CLLocation) -> Observable<String> {
+        return Observable<String>.create { observer in
+            let geocoder = CLGeocoder()
+            geocoder.reverseGeocodeLocation(location) { placemarks, error in
+                if let place = placemarks?.first {
+                    if let gu = place.locality, let dong = place.subLocality {
+                        observer.onNext("\(gu) \(dong)")
+                    } else {
+                        observer.onNext(place.name ?? "알 수 없음")
+                    }
+                } else {
+                    observer.onNext("알 수 없음")
+                }
+                
+                observer.onCompleted()
+            }
+            
+            return Disposables.create()
+        }
+    }
 }

@@ -11,6 +11,11 @@ import CoreLocation
 
 class StaticLocationProvider: LocationProviderType {
     
+    func reverseGeoCodeLocation(location: CLLocation) -> Observable<String> {
+        return Observable.just("")
+    }
+    
+    
     @discardableResult
     func currentLocation() -> Observable<CLLocation> {
         return Observable.just(CLLocation.gangnamStation)
