@@ -111,7 +111,7 @@ extension WeatherData {
 }
 
 extension WeatherData: IdentifiableType {
-    var identity: Double {
-        return date?.timeIntervalSinceReferenceDate ?? 0
+    var identity: String {
+        return UUID().uuidString
     }
 }

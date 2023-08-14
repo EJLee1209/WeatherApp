@@ -10,6 +10,7 @@
 		CF2DC1672A89DAEE004E88C2 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CF2DC1662A89DAEE004E88C2 /* SDWebImage */; };
 		CF2DC1692A89F880004E88C2 /* Reactive+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */; };
 		CF2DC16B2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */; };
+		CF2DC16D2A8A1182004E88C2 /* CoreLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC16C2A8A1182004E88C2 /* CoreLocationProvider.swift */; };
 		CF61E8222A88B4DE0046BA30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */; };
 		CF61E8242A88B4DE0046BA30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */; };
 		CF61E82C2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF61E82A2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld */; };
@@ -49,6 +50,7 @@
 /* Begin PBXFileReference section */
 		CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UIImageView.swift"; sourceTree = "<group>"; };
 		CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCLLocationManagerDelegateProxy.swift; sourceTree = "<group>"; };
+		CF2DC16C2A8A1182004E88C2 /* CoreLocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreLocationProvider.swift; sourceTree = "<group>"; };
 		CF61E81E2A88B4DE0046BA30 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				CF61E8752A88CC550046BA30 /* LocationProviderType.swift */,
 				CF61E8772A88CCBB0046BA30 /* StaticLocationProvider.swift */,
 				CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */,
+				CF2DC16C2A8A1182004E88C2 /* CoreLocationProvider.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				CF61E86E2A88C6740046BA30 /* CLLocation+HotPlace.swift in Sources */,
 				CF61E8452A88B7840046BA30 /* TransitionModel.swift in Sources */,
 				CF61E87F2A88DE700046BA30 /* CurrentWeatherCell.swift in Sources */,
+				CF2DC16D2A8A1182004E88C2 /* CoreLocationProvider.swift in Sources */,
 				CF61E8632A88C38C0046BA30 /* Forecast.swift in Sources */,
 				CF61E8742A88CC060046BA30 /* CommonViewModel.swift in Sources */,
 				CF61E8432A88B7240046BA30 /* SearchLocationViewController.swift in Sources */,
@@ -472,6 +476,7 @@
 				DEVELOPMENT_TEAM = EX6G2VC9J8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 기반으로 날씨 예보를 보여줍니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -504,6 +509,7 @@
 				DEVELOPMENT_TEAM = EX6G2VC9J8;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WeatherApp/Info.plist;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 기반으로 날씨 예보를 보여줍니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

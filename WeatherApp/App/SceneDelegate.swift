@@ -18,7 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let sceneCoordinator = SceneCoordinator(window: window!)
         let weatherApi = WeatherApi()
-        let locationProvider = StaticLocationProvider()
+//        let locationProvider = StaticLocationProvider()
+        let locationProvider = CoreLocationProvider()
         
         // 의존성 주입
         let viewModel = WeatherViewModel(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
