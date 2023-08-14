@@ -28,7 +28,11 @@ struct Forecast: Codable {
         }
         
         let weather: [Weather]
+        let pop: Double // 강수 확률 ex) 0.74
     }
     
     let list: [ListItem]
 }
+
+
+

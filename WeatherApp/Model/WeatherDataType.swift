@@ -15,6 +15,7 @@ protocol WeatherDataType {
     var temperature: Double { get }
     var maxTemperature: Double? { get }
     var minTemperature: Double? { get }
+    var pop: Double? { get }
     
     var backgroundImageName: String { get }
 }

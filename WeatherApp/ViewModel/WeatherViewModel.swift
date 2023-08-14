@@ -52,10 +52,12 @@ class WeatherViewModel: CommonViewModel {
                     summaryList.append(summary)
                 }
                 
+                let dailyWeather = WeatherData.dailyWeatherData(data: forecast, dateFormatter: WeatherViewModel.dateFormatter)
+                
                 return [
                     SectionModel(model: 0, items: summaryList),
                     SectionModel(model: 1, items: forecast as! [WeatherData]),
-                    SectionModel(model: 2, items: forecast as! [WeatherData]),
+                    SectionModel(model: 2, items: dailyWeather as! [WeatherData]),
                 ]
             }
             .asDriver(onErrorJustReturn: [])

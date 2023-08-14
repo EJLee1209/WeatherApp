@@ -17,6 +17,7 @@ struct WeatherData: WeatherDataType, Equatable {
     var temperature: Double
     var maxTemperature: Double?
     var minTemperature: Double?
+    var pop: Double?
     
     var backgroundImageName: String {
         // 맑음(낮), 맑음(밤), 비, 눈
@@ -49,7 +50,7 @@ extension WeatherData {
         temperature = currentWeather.main.temp
         maxTemperature = currentWeather.main.temp_max
         minTemperature = currentWeather.main.temp_min
-        
+        pop = nil
     }
     
     init(forecastItem: Forecast.ListItem) {
@@ -59,6 +60,53 @@ extension WeatherData {
         temperature = forecastItem.main.temp
         maxTemperature = nil
         minTemperature = nil
+        pop = forecastItem.pop
+    }
+    
+    static func dailyWeatherData(data: [WeatherDataType], dateFormatter: DateFormatter) -> [WeatherDataType] {
+        
+        var dict : [String: [WeatherDataType]] = [:]
+        
+        dateFormatter.dateFormat = "yyyyMMdd"
+        
+        data.forEach { data in
+            guard let date = data.date else { return }
+            
+            let dateKey = dateFormatter.string(from: date)
+            
+            if var key = dict[dateKey] {
+                key.append(data)
+            } else {
+                dict[dateKey] = [data]
+            }
+        }
+        
+        print(dict)
+        
+        var dailyWeather: [WeatherDataType] = []
+        
+        for (_, values) in dict {
+            var maxTemp = Double(-Int.max) // 최고 기온
+            var minTemp = Double(Int.max) // 최저 기온
+            
+            var pop = 0.0 // 강수 확률
+            
+            values.forEach { data in
+                maxTemp = max(maxTemp, data.temperature)
+                minTemp = min(minTemp, data.temperature)
+                if let rain = data.pop {
+                    pop = max(pop, rain)
+                }
+            }
+            
+            let day = WeatherData(code: nil, date: values.first!.date!, icon: values.first!.icon, description: values.first!.description, temperature: values.first!.temperature, maxTemperature: maxTemp, minTemperature: minTemp, pop: pop)
+            
+            dailyWeather.append(day)
+        }
+        
+        dailyWeather.sort { $0.date! < $1.date! }
+        
+        return dailyWeather
     }
 }
 

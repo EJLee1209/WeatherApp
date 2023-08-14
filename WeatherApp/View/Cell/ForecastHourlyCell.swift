@@ -69,10 +69,12 @@ class ForecastHourlyCell: UICollectionViewCell {
         dateFormatter.dateFormat = "a hh시"
         timeLabel.text = dateFormatter.string(for: data.date)
         
-        weatherImageView.image = UIImage.from(name: data.icon)
-        
         let tempStr = tempFormatter.string(for: data.temperature) ?? "-"
         tempLabel.text = "\(tempStr)°"
+        
+        let urlStr = "https://openweathermap.org/img/wn/\(data.icon)@2x.png"
+        guard let url = URL(string: urlStr) else { return }
+        weatherImageView.sd_setImage(with: url)
     }
     
 }

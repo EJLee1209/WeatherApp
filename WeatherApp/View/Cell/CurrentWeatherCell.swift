@@ -44,19 +44,19 @@ class CurrentWeatherCell: UICollectionViewCell {
     func configure(from data: WeatherDataType, address: String, tempFormatter: NumberFormatter) {
         
         let attrText = NSMutableAttributedString(
-            string: address,
+            string: "\(address)\n",
             attributes: [.font: UIFont.systemFont(ofSize: 25)]
         )
         
         let currentTemp = tempFormatter.string(for: data.temperature) ?? "-"
         
         attrText.append(NSAttributedString(
-            string: currentTemp,
+            string: "\(currentTemp)\n",
             attributes: [.font: UIFont.systemFont(ofSize: 44)]
         ))
         
         attrText.append(NSAttributedString(
-            string: data.description,
+            string: "\(data.description)\n",
             attributes: [.font: UIFont.systemFont(ofSize: 18)]
         ))
         
