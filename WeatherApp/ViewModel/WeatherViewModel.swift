@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 import UIKit
+import Action
 
 
 typealias SectionModel = AnimatableSectionModel<Int, WeatherData>
@@ -41,37 +42,47 @@ class WeatherViewModel: CommonViewModel {
                 viewModel.weatherApi.fetch(location: location)
                     .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
             }
-            .do(onNext: { [weak self] (weatherData, _) in
+            .do(onNext: { [weak self] (weatherData, d) in
                 
                 guard let weatherData = weatherData else { return }
                 // 날씨 데이터를 통해 배경 이미지 이름 요소 방출
                 self?.backgroundImageName.accept(weatherData.backgroundImageName)
                 
             })
-            .map { (currentWeather, forecast) in
-                var currentWeatherList = [WeatherData]()
-                
-                if let currentWeather = currentWeather as? WeatherData {
-                    currentWeatherList.append(currentWeather)
-                }
-                
-                let dailyWeather = WeatherData.dailyWeatherData(data: forecast, dateFormatter: WeatherViewModel.dateFormatter)
-                
-                var forecast30Hour = [WeatherDataType]()
-                
-                if forecast.count > 10 {
-                    for i in 0...10 {
-                        forecast30Hour.append(forecast[i])
-                    }
-                }
-                
-                return [
-                    SectionModel(model: 0, items: currentWeatherList), // 섹션 0, 현재 날씨
-                    SectionModel(model: 1, items: forecast30Hour as! [WeatherData]), // 섹션 1, 일기 예보(30시간, 3시간 간격)
-                    SectionModel(model: 2, items: dailyWeather as! [WeatherData]), // 섹션 2, 일기 예보(5일, 1일 간격)
-                ]
+            .compactMap { [weak self] (currentWeather, forecast) in
+                return self?.makeSectionModelList(currentWeather: currentWeather, forecast: forecast)
             }
             .asDriver(onErrorJustReturn: [])
+    }
+    
+    func makeSectionModelList(currentWeather: WeatherDataType?, forecast: [WeatherDataType]) -> [SectionModel] {
+        var currentWeatherList = [WeatherData]()
+        
+        var dailyWeather = WeatherData.dailyWeatherData(data: forecast, dateFormatter: WeatherViewModel.dateFormatter)
+        
+        if dailyWeather.count > 0 {
+            dailyWeather.removeFirst()
+        }
+        
+        if let currentWeather = currentWeather as? WeatherData {
+            dailyWeather.insert(currentWeather, at: 0)
+            
+            currentWeatherList.append(currentWeather)
+        }
+        
+        var forecast30Hour = [WeatherDataType]()
+        
+        if forecast.count > 10 {
+            for i in 0...10 {
+                forecast30Hour.append(forecast[i])
+            }
+        }
+        
+        return [
+            SectionModel(model: 0, items: currentWeatherList), // 섹션 0, 현재 날씨
+            SectionModel(model: 1, items: forecast30Hour as! [WeatherData]), // 섹션 1, 일기 예보(30시간, 3시간 간격)
+            SectionModel(model: 2, items: dailyWeather as! [WeatherData]), // 섹션 2, 일기 예보(5일, 1일 간격)
+        ]
     }
     
     // CollectionView RxDataSource
@@ -111,5 +122,26 @@ class WeatherViewModel: CommonViewModel {
         
         return ds
     }()
+    
+    //MARK: - Action
+    
+    func makeLocationListButtonAction() -> CocoaAction {
+        return CocoaAction { [weak self] _ in
+            guard let self = self else { return Observable.empty() }
+            let searchLocationViewModel = SearchLocationViewModel(
+                title: "날씨",
+                sceneCoordinator: self.sceneCoordinator,
+                weatherApi: self.weatherApi,
+                locationProvider: self.locationProvider
+            )
+            
+            let searchLocationScene = Scene.searchLocation(searchLocationViewModel)
+            
+            return self.sceneCoordinator.transition(to: searchLocationScene, using: .push, animated: true)
+                .asObservable()
+                .map { _ in }
+                
+        }
+    }
     
 }

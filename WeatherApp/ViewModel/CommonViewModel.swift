@@ -14,12 +14,18 @@ class CommonViewModel: NSObject {
     
     let bag = DisposeBag()
     let address = BehaviorRelay<String>(value: "")
+    let title = BehaviorRelay<String>(value: "")
     
     let sceneCoordinator: SceneCoordinatorType
     let weatherApi: WeatherApiType
     let locationProvider: LocationProviderType
     
-    init(sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
+    init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
+        
+        if let title = title {
+            self.title.accept(title)
+        }
+        
         self.sceneCoordinator = sceneCoordinator
         self.weatherApi = weatherApi
         self.locationProvider = locationProvider

@@ -38,6 +38,15 @@ class SceneCoordinator: SceneCoordinatorType {
             window.rootViewController = target
             window.makeKeyAndVisible()
             
+            if let nav = target as? UINavigationController {
+                nav.rx.willShow
+                    .withUnretained(self)
+                    .subscribe(onNext: { coordinator, evt in
+                        coordinator.currentVC = evt.viewController.sceneViewController
+                    })
+                    .disposed(by: bag)
+            }
+            
             subject.onCompleted()
         case .push:
             guard let nav = currentVC?.navigationController else {
@@ -60,6 +69,15 @@ class SceneCoordinator: SceneCoordinatorType {
             currentVC?.present(target, animated: animated) {
                 subject.onCompleted()
             }
+            
+            target.rx.methodInvoked(#selector(target.viewWillDisappear(_:)))
+                .map { _ in }
+                .withUnretained(self)
+                .subscribe(onNext: { coordinator, _ in
+                    guard let parentVC = target.presentingViewController else { return }
+                    coordinator.currentVC = parentVC.sceneViewController
+                })
+                .disposed(by: bag)
             
             currentVC = target.sceneViewController
         }

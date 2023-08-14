@@ -18,12 +18,13 @@ extension Scene {
         case .weather(let weatherViewModel):
             
             var vc = WeatherViewController()
+            let nav = UINavigationController(rootViewController: vc)
             
             DispatchQueue.main.async {
                 vc.bind(viewModel: weatherViewModel)
             }
             
-            return vc
+            return nav
         case .searchLocation(let searchLocationViewModel):
             var vc = SearchLocationViewController()
             

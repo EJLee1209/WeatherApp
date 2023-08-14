@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class WeatherViewController: UITabBarController, ViewModelBindableType {
+class WeatherViewController: UIViewController, ViewModelBindableType {
     
     //MARK: - Properties
     
@@ -19,6 +19,20 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
         return iv
     }()
     
+    private let bottomBarView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.7949617505, green: 0.7949617505, blue: 0.8408269716, alpha: 0.8996274834)
+        return view
+    }()
+    
+    private var locationListButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.tintColor = .white
+        button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
+        return button
+    }()
+        
+    
     private lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
         cv.backgroundColor = .clear
@@ -26,6 +40,8 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
         cv.register(ForecastHourlyCell.self, forCellWithReuseIdentifier: ForecastHourlyCell.identifier)
         cv.register(ForecastDailyCell.self, forCellWithReuseIdentifier: ForecastDailyCell.identifier)
         cv.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
+        cv.showsVerticalScrollIndicator = false
+        cv.contentInset.bottom = 50
         return cv
     }()
     
@@ -42,6 +58,8 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
         viewModel.backgroundImageName
             .bind(to: backgroundImageView.rx.background)
             .disposed(by: bag)
+        
+        locationListButton.rx.action = viewModel.makeLocationListButtonAction()
     }
     
     
@@ -67,6 +85,20 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
             make.left.equalToSuperview().offset(20)
             make.right.equalToSuperview().offset(-20)
         }
+        
+        view.addSubview(bottomBarView)
+        bottomBarView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.height.equalTo(70)
+        }
+        
+        bottomBarView.addSubview(locationListButton)
+        locationListButton.snp.makeConstraints { make in
+            make.right.equalToSuperview().inset(25)
+            make.top.equalToSuperview().offset(8)
+            make.size.equalTo(36)
+        }
+        
         
     }
     
@@ -134,7 +166,7 @@ extension WeatherViewController {
                     elementKind: UICollectionView.elementKindSectionHeader,
                     alignment: .topLeading
                 )
-
+                
                 section.boundarySupplementaryItems = [header]
                 
                 // 섹션 배경 생성

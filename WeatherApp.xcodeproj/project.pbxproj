@@ -13,6 +13,7 @@
 		CF2DC16D2A8A1182004E88C2 /* CoreLocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC16C2A8A1182004E88C2 /* CoreLocationProvider.swift */; };
 		CF2DC1702A8A1C83004E88C2 /* SectionBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC16F2A8A1C83004E88C2 /* SectionBackgroundView.swift */; };
 		CF2DC1722A8A21AE004E88C2 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC1712A8A21AE004E88C2 /* SectionHeaderView.swift */; };
+		CF2DC1752A8A3574004E88C2 /* Action in Frameworks */ = {isa = PBXBuildFile; productRef = CF2DC1742A8A3574004E88C2 /* Action */; };
 		CF61E8222A88B4DE0046BA30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */; };
 		CF61E8242A88B4DE0046BA30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */; };
 		CF61E82C2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF61E82A2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld */; };
@@ -96,6 +97,7 @@
 				CF2DC1672A89DAEE004E88C2 /* SDWebImage in Frameworks */,
 				CF61E8542A88B9E70046BA30 /* RxSwift in Frameworks */,
 				CF61E8612A88C3570046BA30 /* RxDataSources in Frameworks */,
+				CF2DC1752A8A3574004E88C2 /* Action in Frameworks */,
 				CF61E8522A88B9E70046BA30 /* RxRelay in Frameworks */,
 				CF61E8502A88B9E70046BA30 /* RxCocoa in Frameworks */,
 				CF61E8822A88DF430046BA30 /* SnapKit in Frameworks */,
@@ -258,6 +260,7 @@
 				CF61E8602A88C3570046BA30 /* RxDataSources */,
 				CF61E8812A88DF430046BA30 /* SnapKit */,
 				CF2DC1662A89DAEE004E88C2 /* SDWebImage */,
+				CF2DC1742A8A3574004E88C2 /* Action */,
 			);
 			productName = WeatherApp;
 			productReference = CF61E81E2A88B4DE0046BA30 /* WeatherApp.app */;
@@ -292,6 +295,7 @@
 				CF61E85F2A88C3570046BA30 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				CF61E8802A88DF430046BA30 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				CF2DC1652A89DAEE004E88C2 /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				CF2DC1732A8A3574004E88C2 /* XCRemoteSwiftPackageReference "Action" */,
 			);
 			productRefGroup = CF61E81F2A88B4DE0046BA30 /* Products */;
 			projectDirPath = "";
@@ -580,6 +584,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		CF2DC1732A8A3574004E88C2 /* XCRemoteSwiftPackageReference "Action" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/Action";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
 		CF61E84E2A88B9E70046BA30 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -611,6 +623,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CF2DC1652A89DAEE004E88C2 /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		CF2DC1742A8A3574004E88C2 /* Action */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CF2DC1732A8A3574004E88C2 /* XCRemoteSwiftPackageReference "Action" */;
+			productName = Action;
 		};
 		CF61E84F2A88B9E70046BA30 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -13,7 +13,7 @@ class SectionBackgroundView: UICollectionReusableView {
     
     private let backgroundView: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray.withAlphaComponent(0.5)
+        view.backgroundColor = #colorLiteral(red: 0.7949617505, green: 0.7949617505, blue: 0.8408269716, alpha: 0.6455142798)
         view.clipsToBounds = true
         return view
     }()

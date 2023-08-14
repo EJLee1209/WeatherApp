@@ -51,7 +51,7 @@ class CurrentWeatherCell: UICollectionViewCell {
         let currentTemp = tempFormatter.string(for: data.temperature) ?? "-"
         
         attrText.append(NSAttributedString(
-            string: "\(currentTemp)\n",
+            string: "\(currentTemp)°\n",
             attributes: [.font: UIFont.systemFont(ofSize: 44)]
         ))
         

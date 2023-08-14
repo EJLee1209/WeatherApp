@@ -7,6 +7,6 @@
 
 import Foundation
 
-class SearchLocationViewModel {
+class SearchLocationViewModel: CommonViewModel {
     
 }
