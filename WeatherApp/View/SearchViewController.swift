@@ -13,14 +13,23 @@ final class SearchViewController: UIViewController {
     
     //MARK: - Properties
     
+    private let tableView: UITableView = {
+        let tv = UITableView()
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: "SearchCell")
+        tv.rowHeight = 50
+        return tv
+    }()
+    
     let viewModel: SearchViewModel
     private let bag = DisposeBag()
+    
     
     //MARK: - LifeCycle
     
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        
         bindViewModel()
     }
     
@@ -31,20 +40,27 @@ final class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        configureUI()
     }
+    
+    //MARK: - Helpers
     
     func bindViewModel() {
         // ViewBinding
         
-        viewModel.keyword
-            .subscribe(onNext: { str in
-                print(str)
+        viewModel.results
+            .subscribe(onNext: { result in
+                print(result)
             })
             .disposed(by: bag)
-        
     }
     
+    func configureUI() {
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
 }
 
 

@@ -21,6 +21,7 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     
     func bindViewModel() {
         // 뷰 바인딩
+        
         viewModel.title
             .bind(to: rx.title)
             .disposed(by: bag)
@@ -29,8 +30,6 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
             .compactMap { $0 }
             .bind(to: viewModel.keyword)
             .disposed(by: bag)
-        
-        
         
     }
     
