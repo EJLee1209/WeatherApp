@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CF2DC1672A89DAEE004E88C2 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = CF2DC1662A89DAEE004E88C2 /* SDWebImage */; };
+		CF2DC1692A89F880004E88C2 /* Reactive+UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */; };
+		CF2DC16B2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */; };
 		CF61E8222A88B4DE0046BA30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */; };
 		CF61E8242A88B4DE0046BA30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */; };
 		CF61E82C2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF61E82A2A88B4DE0046BA30 /* WeatherApp.xcdatamodeld */; };
@@ -45,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UIImageView.swift"; sourceTree = "<group>"; };
+		CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCLLocationManagerDelegateProxy.swift; sourceTree = "<group>"; };
 		CF61E81E2A88B4DE0046BA30 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF61E8212A88B4DE0046BA30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF61E8232A88B4DE0046BA30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +152,7 @@
 				CF61E8712A88C70F0046BA30 /* WeatherApi.swift */,
 				CF61E8752A88CC550046BA30 /* LocationProviderType.swift */,
 				CF61E8772A88CCBB0046BA30 /* StaticLocationProvider.swift */,
+				CF2DC16A2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -198,6 +203,7 @@
 			children = (
 				CF61E86D2A88C6740046BA30 /* CLLocation+HotPlace.swift */,
 				CF61E8852A88E60C0046BA30 /* UIImage+Weather.swift */,
+				CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -296,12 +302,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF2DC1692A89F880004E88C2 /* Reactive+UIImageView.swift in Sources */,
 				CF61E8672A88C51F0046BA30 /* WeatherDataType.swift in Sources */,
 				CF61E8762A88CC550046BA30 /* LocationProviderType.swift in Sources */,
 				CF61E86B2A88C5BA0046BA30 /* Constants.swift in Sources */,
 				CF61E83F2A88B6360046BA30 /* Scene.swift in Sources */,
 				CF61E8882A88E66C0046BA30 /* ForecastDailyCell.swift in Sources */,
 				CF61E8492A88B8730046BA30 /* WeatherViewModel.swift in Sources */,
+				CF2DC16B2A8A0F5E004E88C2 /* RxCLLocationManagerDelegateProxy.swift in Sources */,
 				CF61E8412A88B6EE0046BA30 /* WeatherViewController.swift in Sources */,
 				CF61E8562A88BA670046BA30 /* SceneCoordinator.swift in Sources */,
 				CF61E84B2A88B89B0046BA30 /* SearchLocationViewModel.swift in Sources */,

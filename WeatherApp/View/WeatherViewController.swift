@@ -33,6 +33,7 @@ class WeatherViewController: UITabBarController, ViewModelBindableType {
     
     func bindViewModel() {
         // ViewBinding
+        
         viewModel.weatherData
             .drive(collectionView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: bag)
@@ -115,13 +116,13 @@ extension WeatherViewController {
                 
                 return section
             case 2:
-                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width), heightDimension: .absolute(80))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width - 40), heightDimension: .absolute(80))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width), heightDimension: .absolute(80))
+                let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(self.view.bounds.width - 40), heightDimension: .absolute(80))
                 let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = 10
-                section.contentInsets = .init(top: 20, leading: 0, bottom: 20, trailing: 0)
+                section.contentInsets = .init(top: 0, leading: 20, bottom: 20, trailing: 20)
                 
                 // 섹션에 헤더 추가
 //                let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(44)) // Header height is estimated
@@ -145,13 +146,4 @@ extension WeatherViewController {
 }
 
 
-extension Reactive where Base: UIImageView {
-    
-    var background: Binder<String> {
-        return Binder(self.base) { iv, imageName in
-            iv.image = UIImage(named: imageName)
-        }
-    }
-    
-}
 
