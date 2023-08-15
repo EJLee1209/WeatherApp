@@ -59,7 +59,7 @@ class LocalWeatherCell: UICollectionViewCell {
     private lazy var rightStack: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [tempLabel, maxMinTempLabel])
         sv.axis = .vertical
-        sv.alignment = .leading
+        sv.alignment = .trailing
         sv.distribution = .equalSpacing
         return sv
     }()
@@ -108,7 +108,7 @@ class LocalWeatherCell: UICollectionViewCell {
         
         backgroundImageView.addSubview(containerStack)
         containerStack.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(10)
+            make.edges.equalToSuperview().inset(16)
         }
         
     }
@@ -129,42 +129,6 @@ class LocalWeatherCell: UICollectionViewCell {
     
 }
 
-extension Reactive where Base: UIImageView {
-    
-    var cellBackground: Binder<WeatherDataType> {
-        return Binder(self.base) { iv, data in
-            iv.image = UIImage(named: data.backgroundImageName)
-        }
-    }
-    
-}
 
-extension Reactive where Base: UILabel {
-    
-    var description: Binder<WeatherDataType> {
-        return Binder(self.base) { label, data in
-            label.text = data.description
-        }
-    }
-    
-    var temperature: Binder<WeatherDataType> {
-        return Binder(self.base) { label, data in
-            label.text = "\(data.temperature)°"
-        }
-    }
-    
-    var minMaxTemp: Binder<WeatherDataType> {
-        return Binder(self.base) { label, data in
-            let max = data.maxTemperature ?? 0.0
-            let min = data.minTemperature ?? 0.0
-    
-            let maxTemp = WeatherViewModel.tempFormatter.string(for: max) ?? "-"
-            let minTemp = WeatherViewModel.tempFormatter.string(for: min) ?? "-"
-            
-            let maxMinTemp = "최고:\(maxTemp)° 최저:\(minTemp)°"
-            
-            label.text = maxMinTemp
-        }
-    }
-    
-}
+
+

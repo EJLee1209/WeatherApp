@@ -17,3 +17,13 @@ extension Reactive where Base: UIImageView {
         }
     }
 }
+
+extension Reactive where Base: UIImageView {
+    
+    var cellBackground: Binder<WeatherDataType> {
+        return Binder(self.base) { iv, data in
+            iv.image = UIImage(named: data.backgroundImageName)
+        }
+    }
+    
+}
