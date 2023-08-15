@@ -42,13 +42,6 @@ class WeatherApi: WeatherApiType {
         let currentWeather = fetchCurrentWeather(location: location)
         let forecast = fetchForecast(location: location)
         
-        Observable.zip(currentWeather, forecast)
-            .subscribe(onNext: { [weak self] result in
-                self?.currentRelay.accept(result.0)
-                self?.forecastRelay.accept(result.1)
-            })
-            .disposed(by: bag)
-        
-        return Observable.combineLatest(currentRelay.asObservable(), forecastRelay.asObservable())
+        return Observable.zip(currentWeather, forecast)
     }
 }

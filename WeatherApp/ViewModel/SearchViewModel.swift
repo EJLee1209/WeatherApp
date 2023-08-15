@@ -24,6 +24,8 @@ class SearchViewModel: CommonViewModel {
     let selectedItem = PublishRelay<MKLocalSearchCompletion>() // 선택한 Cell item
     let selectedLocation = PublishRelay<CLLocation>() // 선택한 Cell의 위치 정보
     
+    let localList = BehaviorRelay<[LocalSectionModel]>(value: [])
+    
     override init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType, storage: LocalStorageType) {
         super.init(title: title, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: storage)
         
@@ -54,7 +56,23 @@ class SearchViewModel: CommonViewModel {
                 self?.makeWeatherModalViewFromSelectedItem(location: location)
             })
             .disposed(by: bag)
+        
+        localStorage.read()
+            .bind(to: self.localList)
+            .disposed(by: bag)
     }
+    
+    
+    lazy var localDataSource: RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> = {
+        let ds = RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> { dataSource, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocalWeatherCell.identifier, for: indexPath) as! LocalWeatherCell
+            cell.viewModel = LocalWeatherViewModel(address: item.address, location: item.location, api: self.weatherApi)
+            return cell
+        }
+        
+        return ds
+        
+    }()
     
     // 검색 결과 TableView에 사용할 RxDataSource
     let dataSource: RxTableViewSectionedAnimatedDataSource<SearchSectionModel> = {

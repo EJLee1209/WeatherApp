@@ -15,6 +15,15 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     //MARK: - Properties
     private lazy var searchController = UISearchController(searchResultsController: SearchViewController(viewModel: viewModel))
     
+    private lazy var collectionView : UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = .init(width: view.frame.width-30, height: 120)
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(LocalWeatherCell.self, forCellWithReuseIdentifier: LocalWeatherCell.identifier)
+        cv.alwaysBounceVertical = true
+        return cv
+    }()
+    
     private let bag = DisposeBag()
     
     var viewModel: SearchViewModel!
@@ -29,6 +38,10 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
         searchController.searchBar.rx.text
             .compactMap { $0 }
             .bind(to: viewModel.keyword)
+            .disposed(by: bag)
+        
+        viewModel.localList
+            .bind(to: collectionView.rx.items(dataSource: viewModel.localDataSource))
             .disposed(by: bag)
         
         
@@ -59,10 +72,16 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     private func configureUI() {
         view.backgroundColor = .white
         
+        view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+     
     }
     
     private func setupSearchBar() {
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.autocapitalizationType = .none
         searchController.searchBar.placeholder = "도시 또는 공항 검색"
     }

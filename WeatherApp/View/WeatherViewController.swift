@@ -63,6 +63,7 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
     func bindViewModel() {
         // ViewBinding
         viewModel.weatherData
+            .asDriver(onErrorJustReturn: [])
             .drive(collectionView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: bag)
        
@@ -72,23 +73,14 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
         
         locationListButton.rx.action = viewModel.makeLocationListButtonAction()
         
-        
-        addButton.rx.tap
-            .throttle(.seconds(1), scheduler: MainScheduler.instance)
-            .flatMap { [weak self] in
-                Observable.just(self?.viewModel.location)
-            }
-            .compactMap { $0 }
-            .bind(to: viewModel.addAction.inputs)
-            .disposed(by: bag)
-            
-        cancelButton.rx.action = viewModel.makeCancelButtonAction()
-        
         if viewModel.location != nil {
             bottomBarView.isHidden = true
             
             navigationItem.setRightBarButton(addButton, animated: true)
             navigationItem.setLeftBarButton(cancelButton, animated: true)
+            
+            addButton.rx.action = viewModel.makeAddButtonAction()
+            cancelButton.rx.action = viewModel.makeCancelButtonAction()
         }
         
     }

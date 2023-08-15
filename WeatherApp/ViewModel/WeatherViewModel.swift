@@ -21,13 +21,14 @@ class WeatherViewModel: CommonViewModel {
     // 날씨 배경 이미지 이름 (Asset에 정의)
     var backgroundImageName = BehaviorRelay<String>(value: "bg_sunny")
     
-    
     // location은 장소 검색 화면(SearchViewController)을 통해서만 주입
     // if location == nil, 현재 위치를 기반 날씨 else, 해당 위치를 기반 날씨
     var location: CLLocation?
     
     // location의 주소
     var locationAddress: BehaviorRelay<String> = .init(value: "")
+    // 날씨 데이터, RxDataSource를 사용하기 위해서 SectionModel 사용
+    var weatherData: BehaviorRelay<[SectionModel]> = .init(value: [SectionModel(model: 0, items: [])])
     
     init(
         title: String? = nil,
@@ -39,17 +40,46 @@ class WeatherViewModel: CommonViewModel {
     ) {
         super.init(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: storage)
         
-        self.location = location
+        var observable: Observable<(WeatherDataType?, [WeatherDataType])>
         
-        guard let location = location else { return }
+        if let location {
+            self.location = location
+            
+            // 주입 받은 location을 통해 reverseGeoCode를 하고, locationAddress에 바인딩
+            locationProvider.reverseGeoCodeLocation(location: location)
+                .bind(to: locationAddress)
+                .disposed(by: bag)
+            
+            observable = weatherApi.fetch(location: location)
+            
+        } else {
+            observable = locationProvider.currentLocation()
+                .withUnretained(self)
+                .flatMap { viewModel, location in
+                    viewModel.weatherApi.fetch(location: location)
+                        .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
+                }
+        }
         
-        // 주입 받은 location을 통해 reverseGeoCode를 하고, locationAddress에 바인딩
-        locationProvider.reverseGeoCodeLocation(location: location)
-            .bind(to: locationAddress)
+        observable
+            .do(onNext: { [weak self] (weatherData, d) in
+
+                guard let weatherData = weatherData else { return }
+                // 날씨 데이터를 통해 배경 이미지 이름 요소 방출
+                self?.backgroundImageName.accept(weatherData.backgroundImageName)
+                
+            })
+            .compactMap { [weak self] (currentWeather, forecast) in
+                return self?.makeSectionModelList(currentWeather: currentWeather, forecast: forecast)
+            }
+            .bind(to: weatherData)
             .disposed(by: bag)
+        
     }
     
+    
     static let tempFormatter: NumberFormatter = {
+        
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 0
         formatter.maximumFractionDigits = 1
@@ -62,41 +92,7 @@ class WeatherViewModel: CommonViewModel {
         formatter.locale = Locale(identifier: "Ko_kr")
         return formatter
     }()
-    
-    // 날씨 데이터, RxDataSource를 사용하기 위해서 SectionModel 사용
-    var weatherData: Driver<[SectionModel]> {
-        var observable: Observable<(WeatherDataType?, [WeatherDataType])>
-        
-        if let location {
-            // 생성자로 받은 위치 정보가 있는 경우(장소 검색으로 화면 진입한 경우)
-            print("WeatherViewModel : location 있음, \(location)")
-            observable = weatherApi.fetch(location: location)
-        } else {
-            // 현재 위치로 날씨 검색
-            print("WeatherViewModel : location 없음, 현재 위치 검색합니다..")
-            observable = locationProvider.currentLocation()
-                .withUnretained(self)
-                .flatMap { viewModel, location in
-                    viewModel.weatherApi.fetch(location: location)
-                        .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
-                }
-        }
-        
-        return observable
-            .asDriver(onErrorJustReturn: (nil, []))
-            .do(onNext: { [weak self] (weatherData, d) in
-                
-                guard let weatherData = weatherData else { return }
-                // 날씨 데이터를 통해 배경 이미지 이름 요소 방출
-                self?.backgroundImageName.accept(weatherData.backgroundImageName)
-                
-            })
-            .compactMap { [weak self] (currentWeather, forecast) in
-                return self?.makeSectionModelList(currentWeather: currentWeather, forecast: forecast)
-            }
-            .asDriver(onErrorJustReturn: [])
-        
-    }
+
     
     private func makeSectionModelList(currentWeather: WeatherDataType?, forecast: [WeatherDataType]) -> [SectionModel] {
         var currentWeatherList = [WeatherData]()
@@ -188,13 +184,18 @@ class WeatherViewModel: CommonViewModel {
         }
     }
     
-    var addAction: Action<CLLocation, Void> {
-        return Action { [weak self] input in
-            guard let self = self else { return Observable.empty() }
+    func makeAddButtonAction() -> CocoaAction {
+        return CocoaAction { [weak self] _ in
+            guard let self = self, let location = location else {
+                return Observable.empty()
+            }
             
-            print(input)
-            
-            return Observable.empty()
+            return localStorage.create(address: locationAddress.value, lat: location.coordinate.latitude, lon: location.coordinate.longitude)
+                .flatMap { _ in
+                    self.sceneCoordinator.close(animated: true)
+                        .asObservable()
+                        .map { _ in }
+                }
         }
     }
     
