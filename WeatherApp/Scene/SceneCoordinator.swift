@@ -11,7 +11,7 @@ import UIKit
 
 extension UIViewController {
     var sceneViewController: UIViewController {
-        return self.children.first ?? self
+        return self.children.last ?? self
     }
 }
 
@@ -21,7 +21,7 @@ class SceneCoordinator: SceneCoordinatorType {
     private var currentVC: UIViewController? {
         didSet {
             guard let currentVC = currentVC else { return }
-            print(currentVC)
+            print("Scene DEBUG: \(currentVC)")
         }
     }
     
@@ -67,14 +67,14 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
             }
             
-//            target.rx.methodInvoked(#selector(target.viewWillDisappear(_:)))
-//                .map { _ in }
-//                .withUnretained(self)
-//                .subscribe(onNext: { coordinator, _ in
-//                    guard let parentVC = target.presentingViewController else { return }
-//                    coordinator.currentVC = parentVC.sceneViewController
-//                })
-//                .disposed(by: bag)
+            target.rx.methodInvoked(#selector(target.viewWillDisappear(_:)))
+                .map { _ in }
+                .withUnretained(self)
+                .subscribe(onNext: { coordinator, _ in
+                    guard let parentVC = target.presentingViewController else { return }
+                    coordinator.currentVC = parentVC.sceneViewController
+                })
+                .disposed(by: bag)
             
             currentVC = target.sceneViewController
         }
