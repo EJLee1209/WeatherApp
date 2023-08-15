@@ -186,4 +186,26 @@ class WeatherViewModel: CommonViewModel {
         }
     }
     
+    var addAction: Action<CLLocation, Void> {
+        return Action { [weak self] input in
+            guard let self = self else { return Observable.empty() }
+            
+            print(input)
+            
+            return Observable.empty()
+        }
+    }
+    
+    func makeCancelButtonAction() -> CocoaAction {
+        return CocoaAction { [weak self] _ in
+            guard let self = self else {
+                return Observable.empty()
+            }
+            
+            return self.sceneCoordinator.close(animated: true)
+                .asObservable()
+                .map { _ in }
+        }
+    }
+    
 }

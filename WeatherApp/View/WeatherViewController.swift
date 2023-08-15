@@ -31,6 +31,18 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
         button.setImage(UIImage(systemName: "list.bullet"), for: .normal)
         return button
     }()
+    
+    private lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "추가", style: .done, target: self, action: nil)
+        button.tintColor = .white
+        return button
+    }()
+    
+    private lazy var cancelButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "취소", style: .done, target: self, action: nil)
+        button.tintColor = .white
+        return button
+    }()
         
     
     private lazy var collectionView: UICollectionView = {
@@ -50,7 +62,6 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
     
     func bindViewModel() {
         // ViewBinding
-        
         viewModel.weatherData
             .drive(collectionView.rx.items(dataSource: viewModel.dataSource))
             .disposed(by: bag)
@@ -61,10 +72,30 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
         
         locationListButton.rx.action = viewModel.makeLocationListButtonAction()
         
+        
+        addButton.rx.tap
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .flatMap { [weak self] in
+                Observable.just(self?.viewModel.location)
+            }
+            .compactMap { $0 }
+            .bind(to: viewModel.addAction.inputs)
+            .disposed(by: bag)
+            
+        cancelButton.rx.action = viewModel.makeCancelButtonAction()
+        
+        if viewModel.location != nil {
+            bottomBarView.isHidden = true
+            
+            navigationItem.setRightBarButton(addButton, animated: true)
+            navigationItem.setLeftBarButton(cancelButton, animated: true)
+        }
+        
     }
     
     
     //MARK: - LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
