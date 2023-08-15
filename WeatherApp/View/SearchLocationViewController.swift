@@ -31,6 +31,8 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
             .bind(to: viewModel.keyword)
             .disposed(by: bag)
         
+        
+        setupSearchBar() // viewModel이 초기화된 이후에 setupSearchBar 호출
     }
     
     //MARK: - LifeCycle
@@ -38,9 +40,6 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
         super.viewDidLoad()
         
         configureUI()
-        setupSearchBar()
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

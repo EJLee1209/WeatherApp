@@ -21,10 +21,13 @@ class WeatherViewModel: CommonViewModel {
     // 날씨 배경 이미지 이름 (Asset에 정의)
     var backgroundImageName = BehaviorRelay<String>(value: "bg_sunny")
     
+    
+    // location은 장소 검색 화면(SearchViewController)을 통해서만 주입
+    // if location == nil, 현재 위치를 기반 날씨 else, 해당 위치를 기반 날씨
     var location: CLLocation?
     
+    // location의 주소
     var locationAddress: BehaviorRelay<String> = .init(value: "")
-    
     
     init(
         title: String? = nil,
@@ -39,6 +42,7 @@ class WeatherViewModel: CommonViewModel {
         
         guard let location = location else { return }
         
+        // 주입 받은 location을 통해 reverseGeoCode를 하고, locationAddress에 바인딩
         locationProvider.reverseGeoCodeLocation(location: location)
             .bind(to: locationAddress)
             .disposed(by: bag)
@@ -64,9 +68,11 @@ class WeatherViewModel: CommonViewModel {
         
         if let location {
             // 생성자로 받은 위치 정보가 있는 경우(장소 검색으로 화면 진입한 경우)
+            print("WeatherViewModel : location 있음, \(location)")
             observable = weatherApi.fetch(location: location)
         } else {
             // 현재 위치로 날씨 검색
+            print("WeatherViewModel : location 없음, 현재 위치 검색합니다..")
             observable = locationProvider.currentLocation()
                 .withUnretained(self)
                 .flatMap { viewModel, location in
@@ -74,7 +80,6 @@ class WeatherViewModel: CommonViewModel {
                         .asDriver(onErrorJustReturn: (nil, [WeatherDataType]()))
                 }
         }
-        
         
         return observable
             .asDriver(onErrorJustReturn: (nil, []))

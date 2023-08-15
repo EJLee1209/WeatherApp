@@ -16,10 +16,14 @@ extension UIViewController {
 }
 
 class SceneCoordinator: SceneCoordinatorType {
-    private let bag = DisposeBag()
-    
     private var window: UIWindow
-    private var currentVC: UIViewController?
+    private let bag = DisposeBag()
+    private var currentVC: UIViewController? {
+        didSet {
+            guard let currentVC = currentVC else { return }
+            print(currentVC)
+        }
+    }
     
     required init(window: UIWindow) {
         self.window = window
@@ -28,17 +32,14 @@ class SceneCoordinator: SceneCoordinatorType {
     @discardableResult
     func transition(to scene: Scene, using style: TransitionStyle, animated: Bool) -> RxSwift.Completable {
         let subject = PublishSubject<Never>()
-        
         let target = scene.create()
         
         switch style {
         case .root:
-            currentVC = target.sceneViewController
-            
-            window.rootViewController = target
-            window.makeKeyAndVisible()
             
             if let nav = target as? UINavigationController {
+                // navigationController의 push/pop 했을 때 willShow 이벤트를 방출하는 Observable을 구독하는 Observer 등록
+                // navigation의 back버튼을 눌렀을 때, transition메소드는 호출되지 않아서 이런 옵저버를 등록해야함
                 nav.rx.willShow
                     .withUnretained(self)
                     .subscribe(onNext: { coordinator, evt in
@@ -47,22 +48,18 @@ class SceneCoordinator: SceneCoordinatorType {
                     .disposed(by: bag)
             }
             
+            window.rootViewController = target
+            window.makeKeyAndVisible()
+            
             subject.onCompleted()
         case .push:
+            // Push 됐을 때 currentVC 업데이트는 위에서 등록한 Observer에 의해 자동으로 업데이트 됨.
             guard let nav = currentVC?.navigationController else {
                 subject.onError(TransitionError.navigationControllerMissing)
                 break
             }
             
-            nav.rx.willShow
-                .subscribe(onNext: { [weak self] evt in
-                    self?.currentVC = evt.viewController.sceneViewController
-                })
-                .disposed(by: bag)
-            
             nav.pushViewController(target, animated: animated)
-            
-            currentVC = target.sceneViewController
             
             subject.onCompleted()
         case .modal:
@@ -70,14 +67,14 @@ class SceneCoordinator: SceneCoordinatorType {
                 subject.onCompleted()
             }
             
-            target.rx.methodInvoked(#selector(target.viewWillDisappear(_:)))
-                .map { _ in }
-                .withUnretained(self)
-                .subscribe(onNext: { coordinator, _ in
-                    guard let parentVC = target.presentingViewController else { return }
-                    coordinator.currentVC = parentVC.sceneViewController
-                })
-                .disposed(by: bag)
+//            target.rx.methodInvoked(#selector(target.viewWillDisappear(_:)))
+//                .map { _ in }
+//                .withUnretained(self)
+//                .subscribe(onNext: { coordinator, _ in
+//                    guard let parentVC = target.presentingViewController else { return }
+//                    coordinator.currentVC = parentVC.sceneViewController
+//                })
+//                .disposed(by: bag)
             
             currentVC = target.sceneViewController
         }
