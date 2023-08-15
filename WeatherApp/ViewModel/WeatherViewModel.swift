@@ -34,9 +34,10 @@ class WeatherViewModel: CommonViewModel {
         location: CLLocation? = nil,
         sceneCoordinator: SceneCoordinatorType,
         weatherApi: WeatherApiType,
-        locationProvider: LocationProviderType
+        locationProvider: LocationProviderType,
+        storage: LocalStorageType
     ) {
-        super.init(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+        super.init(sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: storage)
         
         self.location = location
         
@@ -174,7 +175,8 @@ class WeatherViewModel: CommonViewModel {
                 title: "날씨",
                 sceneCoordinator: self.sceneCoordinator,
                 weatherApi: self.weatherApi,
-                locationProvider: self.locationProvider
+                locationProvider: self.locationProvider,
+                storage: localStorage
             )
             
             let searchLocationScene = Scene.searchLocation(searchLocationViewModel)

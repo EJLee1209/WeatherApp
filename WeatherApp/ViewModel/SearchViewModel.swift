@@ -24,8 +24,8 @@ class SearchViewModel: CommonViewModel {
     let selectedItem = PublishRelay<MKLocalSearchCompletion>() // 선택한 Cell item
     let selectedLocation = PublishRelay<CLLocation>() // 선택한 Cell의 위치 정보
     
-    override init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
-        super.init(title: title, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+    override init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType, storage: LocalStorageType) {
+        super.init(title: title, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: storage)
         
         searchCompleter.resultTypes = .address
         
@@ -119,7 +119,7 @@ class SearchViewModel: CommonViewModel {
     
     // 위치 정보 응답 발생시 호출되며, location 정보로 날씨 예보 화면을 보여줌
     private func makeWeatherModalViewFromSelectedItem(location: CLLocation) {
-        let weatherViewModel = WeatherViewModel(location: location, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider)
+        let weatherViewModel = WeatherViewModel(location: location, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: localStorage)
         let weatherScene = Scene.weather(weatherViewModel)
         
         sceneCoordinator.transition(to: weatherScene, using: .modal, animated: true)

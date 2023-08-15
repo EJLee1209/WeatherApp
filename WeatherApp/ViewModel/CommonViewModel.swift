@@ -19,8 +19,15 @@ class CommonViewModel: NSObject {
     let sceneCoordinator: SceneCoordinatorType
     let weatherApi: WeatherApiType
     let locationProvider: LocationProviderType
+    let localStorage: LocalStorageType
     
-    init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType) {
+    init(
+        title: String? = nil,
+        sceneCoordinator: SceneCoordinatorType,
+        weatherApi: WeatherApiType,
+        locationProvider: LocationProviderType,
+        storage: LocalStorageType
+    ) {
         
         if let title = title {
             self.title.accept(title)
@@ -29,6 +36,7 @@ class CommonViewModel: NSObject {
         self.sceneCoordinator = sceneCoordinator
         self.weatherApi = weatherApi
         self.locationProvider = locationProvider
+        self.localStorage = storage
         
         locationProvider.currentAddress()
             .bind(to: self.address)
