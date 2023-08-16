@@ -19,6 +19,6 @@ protocol LocalStorageType {
     func read() -> Observable<[LocalSectionModel]>
     
     @discardableResult
-    func delegate(local: Local) -> Observable<Local>
+    func delete(local: Local) -> Observable<Local>
 }
 

@@ -41,7 +41,8 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
             .disposed(by: bag)
         
         viewModel.localList
-            .bind(to: collectionView.rx.items(dataSource: viewModel.localDataSource))
+            .asDriver(onErrorJustReturn: [])
+            .drive(collectionView.rx.items(dataSource: viewModel.localDataSource))
             .disposed(by: bag)
         
         

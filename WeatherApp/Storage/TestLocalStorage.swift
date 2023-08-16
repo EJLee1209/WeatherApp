@@ -33,7 +33,7 @@ class TestLocalStorage: LocalStorageType {
         return store
     }
     
-    func delegate(local: Local) -> RxSwift.Observable<Local> {
+    func delete(local: Local) -> RxSwift.Observable<Local> {
         if let index = sectionModel.items.firstIndex(where: { $0 == local }) {
             sectionModel.items.remove(at: index)
         }

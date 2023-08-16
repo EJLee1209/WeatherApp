@@ -24,7 +24,7 @@ class SearchViewModel: CommonViewModel {
     let selectedItem = PublishRelay<MKLocalSearchCompletion>() // 선택한 Cell item
     let selectedLocation = PublishRelay<CLLocation>() // 선택한 Cell의 위치 정보
     
-    let localList = BehaviorRelay<[LocalSectionModel]>(value: [])
+    let localList = BehaviorRelay<[LocalSectionModel]>(value: []) // CoreData에 저장된 지역 데이터
     
     override init(title: String? = nil, sceneCoordinator: SceneCoordinatorType, weatherApi: WeatherApiType, locationProvider: LocationProviderType, storage: LocalStorageType) {
         super.init(title: title, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: storage)
@@ -57,12 +57,13 @@ class SearchViewModel: CommonViewModel {
             })
             .disposed(by: bag)
         
+        // 지역 데이터 읽어오기
         localStorage.read()
             .bind(to: self.localList)
             .disposed(by: bag)
     }
     
-    
+    // Coredata에 저장되어 있는 지역 정보 CollectionView에 사용할 RxDataSource
     lazy var localDataSource: RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> = {
         let ds = RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> { dataSource, collectionView, indexPath, item in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocalWeatherCell.identifier, for: indexPath) as! LocalWeatherCell
