@@ -74,7 +74,26 @@ class WeatherViewModel: CommonViewModel {
             }
             .bind(to: weatherData)
             .disposed(by: bag)
+    }
+    
+    var navBarButtonIsHidden: Driver<Bool> {
         
+        guard let location = location else {
+            return Observable.just(true)
+                .asDriver(onErrorJustReturn: true)
+        }
+        
+        return localStorage.read()
+            .compactMap { $0.first?.items }
+            .map { [weak self] locals in
+                guard self != nil else { return true }
+                
+                return locals.contains { local in
+                    local.location.coordinate.latitude == location.coordinate.latitude &&
+                    local.location.coordinate.longitude == location.coordinate.longitude
+                }
+            }
+            .asDriver(onErrorJustReturn: true)
     }
     
     

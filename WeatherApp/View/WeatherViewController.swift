@@ -73,14 +73,21 @@ class WeatherViewController: UIViewController, ViewModelBindableType {
         
         locationListButton.rx.action = viewModel.makeLocationListButtonAction()
         
+        viewModel.navBarButtonIsHidden
+            .drive(onNext: { [weak self] isHidden in
+                guard let self = self else { return }
+                
+                if !isHidden {
+                    navigationItem.setLeftBarButton(cancelButton, animated: true)
+                    cancelButton.rx.action = viewModel.makeCancelButtonAction()
+                    navigationItem.setRightBarButton(addButton, animated: true)
+                    addButton.rx.action = viewModel.makeAddButtonAction()
+                }
+            })
+            .disposed(by: bag)
+        
         if viewModel.location != nil {
             bottomBarView.isHidden = true
-            
-            navigationItem.setRightBarButton(addButton, animated: true)
-            navigationItem.setLeftBarButton(cancelButton, animated: true)
-            
-            addButton.rx.action = viewModel.makeAddButtonAction()
-            cancelButton.rx.action = viewModel.makeCancelButtonAction()
         }
         
     }

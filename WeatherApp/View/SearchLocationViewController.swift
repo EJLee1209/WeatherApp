@@ -44,11 +44,14 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
             .drive(tableView.rx.items(dataSource: viewModel.localDataSource))
             .disposed(by: bag)
         
-        
-        
         tableView.rx.modelDeleted(Local.self)
-            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
-            .bind(to: viewModel.deleteAction.inputs)
+            .throttle(.seconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.localDeleteAction.inputs)
+            .disposed(by: bag)
+        
+        tableView.rx.modelSelected(Local.self)
+            .throttle(.seconds(1), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.localSelectAction.inputs)
             .disposed(by: bag)
         
         setupSearchBar() // viewModel이 초기화된 이후에 setupSearchBar 호출

@@ -149,11 +149,23 @@ class SearchViewModel: CommonViewModel {
     
     //MARK: - Actions
     
-    lazy var deleteAction: Action<Local, Void> = {
+    lazy var localDeleteAction: Action<Local, Void> = {
         return Action { [weak self] local in
             guard let self = self else { return Observable.empty() }
             
             return localStorage.delete(local: local)
+                .map { _ in }
+        }
+    }()
+    
+    lazy var localSelectAction: Action<Local, Void> = {
+        return Action { [weak self] local in
+            guard let self = self else { return Observable.empty() }
+            
+            let weatherViewModel = WeatherViewModel(location: local.location, sceneCoordinator: sceneCoordinator, weatherApi: weatherApi, locationProvider: locationProvider, storage: localStorage)
+            let scene = Scene.weather(weatherViewModel)
+            return sceneCoordinator.transition(to: scene, using: .modal, animated: true)
+                .asObservable()
                 .map { _ in }
         }
     }()
