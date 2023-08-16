@@ -49,6 +49,7 @@
 		CF9384412A8BD2F600489C3A /* Reactive+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9384402A8BD2F600489C3A /* Reactive+UILabel.swift */; };
 		CF9460662A8C7B3A0095618C /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9460652A8C7B3A0095618C /* CoreDataStorage.swift */; };
 		CF9460712A8C802F0095618C /* WeatherApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF94606F2A8C802F0095618C /* WeatherApp.xcdatamodeld */; };
+		CF9460732A8CC6820095618C /* Reactive+UINavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9460722A8CC6820095618C /* Reactive+UINavigationItem.swift */; };
 		CFC88E292A8A5A4B00A63733 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E282A8A5A4B00A63733 /* SearchViewController.swift */; };
 		CFC88E2D2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E2C2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift */; };
 		CFC88E2F2A8A72C800A63733 /* MKLocalSearchCompletion+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */; };
@@ -101,6 +102,7 @@
 		CF9384402A8BD2F600489C3A /* Reactive+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UILabel.swift"; sourceTree = "<group>"; };
 		CF9460652A8C7B3A0095618C /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStorage.swift; sourceTree = "<group>"; };
 		CF9460702A8C802F0095618C /* WeatherApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WeatherApp.xcdatamodel; sourceTree = "<group>"; };
+		CF9460722A8CC6820095618C /* Reactive+UINavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+UINavigationItem.swift"; sourceTree = "<group>"; };
 		CFC88E282A8A5A4B00A63733 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		CFC88E2C2A8A683C00A63733 /* RxMKLocalSearchCompleterDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxMKLocalSearchCompleterDelegateProxy.swift; sourceTree = "<group>"; };
 		CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MKLocalSearchCompletion+.swift"; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				CF2DC1682A89F880004E88C2 /* Reactive+UIImageView.swift */,
 				CFC88E2E2A8A72C800A63733 /* MKLocalSearchCompletion+.swift */,
 				CF9384402A8BD2F600489C3A /* Reactive+UILabel.swift */,
+				CF9460722A8CC6820095618C /* Reactive+UINavigationItem.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				CF61E86E2A88C6740046BA30 /* CLLocation+HotPlace.swift in Sources */,
 				CF61E8452A88B7840046BA30 /* TransitionModel.swift in Sources */,
 				CF9460712A8C802F0095618C /* WeatherApp.xcdatamodeld in Sources */,
+				CF9460732A8CC6820095618C /* Reactive+UINavigationItem.swift in Sources */,
 				CF61E87F2A88DE700046BA30 /* CurrentWeatherCell.swift in Sources */,
 				CF2DC16D2A8A1182004E88C2 /* CoreLocationProvider.swift in Sources */,
 				CF93843B2A8BB17200489C3A /* TestLocalStorage.swift in Sources */,
