@@ -10,7 +10,7 @@ import CoreLocation
 import RxSwift
 
 
-class LocalWeatherCell: UICollectionViewCell {
+class LocalWeatherCell: UITableViewCell {
     
     //MARK: - Properties
     
@@ -83,8 +83,8 @@ class LocalWeatherCell: UICollectionViewCell {
     }
     
     //MARK: - LifeCycle
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         configureUI()
     }
@@ -97,9 +97,7 @@ class LocalWeatherCell: UICollectionViewCell {
     
     //MARK: - Helpers
     private func configureUI() {
-        
         clipsToBounds = true
-        layer.cornerRadius = 18
         
         contentView.addSubview(backgroundImageView)
         backgroundImageView.snp.makeConstraints { make in
@@ -110,7 +108,6 @@ class LocalWeatherCell: UICollectionViewCell {
         containerStack.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(16)
         }
-        
     }
     
     func bindViewModel() {

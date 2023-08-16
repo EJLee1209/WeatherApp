@@ -15,13 +15,12 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     //MARK: - Properties
     private lazy var searchController = UISearchController(searchResultsController: SearchViewController(viewModel: viewModel))
     
-    private lazy var collectionView : UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = .init(width: view.frame.width-30, height: 120)
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(LocalWeatherCell.self, forCellWithReuseIdentifier: LocalWeatherCell.identifier)
-        cv.alwaysBounceVertical = true
-        return cv
+    private lazy var tableView : UITableView = {
+        let tv = UITableView()
+        tv.register(LocalWeatherCell.self, forCellReuseIdentifier: LocalWeatherCell.identifier)
+        tv.rowHeight = 120
+        tv.separatorStyle = .none
+        return tv
     }()
     
     private let bag = DisposeBag()
@@ -42,9 +41,15 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
         
         viewModel.localList
             .asDriver(onErrorJustReturn: [])
-            .drive(collectionView.rx.items(dataSource: viewModel.localDataSource))
+            .drive(tableView.rx.items(dataSource: viewModel.localDataSource))
             .disposed(by: bag)
         
+        
+        
+        tableView.rx.modelDeleted(Local.self)
+            .throttle(.milliseconds(500), scheduler: MainScheduler.instance)
+            .bind(to: viewModel.deleteAction.inputs)
+            .disposed(by: bag)
         
         setupSearchBar() // viewModel이 초기화된 이후에 setupSearchBar 호출
     }
@@ -73,8 +78,8 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     private func configureUI() {
         view.backgroundColor = .white
         
-        view.addSubview(collectionView)
-        collectionView.snp.makeConstraints { make in
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
      
@@ -88,3 +93,7 @@ class SearchLocationViewController: UIViewController, ViewModelBindableType {
     }
     
 }
+
+
+
+

@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import MapKit
 import RxDataSources
+import Action
 
 typealias SearchSectionModel = AnimatableSectionModel<Int, MKLocalSearchCompletion>
 
@@ -64,15 +65,16 @@ class SearchViewModel: CommonViewModel {
     }
     
     // Coredata에 저장되어 있는 지역 정보 CollectionView에 사용할 RxDataSource
-    lazy var localDataSource: RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> = {
-        let ds = RxCollectionViewSectionedAnimatedDataSource<LocalSectionModel> { dataSource, collectionView, indexPath, item in
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocalWeatherCell.identifier, for: indexPath) as! LocalWeatherCell
+    lazy var localDataSource: RxTableViewSectionedAnimatedDataSource<LocalSectionModel> = {
+        let ds = RxTableViewSectionedAnimatedDataSource<LocalSectionModel> { dataSource, collectionView, indexPath, item in
+            let cell = collectionView.dequeueReusableCell(withIdentifier: LocalWeatherCell.identifier, for: indexPath) as! LocalWeatherCell
             cell.viewModel = LocalWeatherViewModel(address: item.address, location: item.location, api: self.weatherApi)
+            
             return cell
         }
         
+        ds.canEditRowAtIndexPath = { _,_ in return true }
         return ds
-        
     }()
     
     // 검색 결과 TableView에 사용할 RxDataSource
@@ -144,5 +146,16 @@ class SearchViewModel: CommonViewModel {
         sceneCoordinator.transition(to: weatherScene, using: .modal, animated: true)
     }
     
+    
+    //MARK: - Actions
+    
+    lazy var deleteAction: Action<Local, Void> = {
+        return Action { [weak self] local in
+            guard let self = self else { return Observable.empty() }
+            
+            return localStorage.delete(local: local)
+                .map { _ in }
+        }
+    }()
 }
 
