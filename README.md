@@ -41,4 +41,5 @@ https://openweathermap.org/api
 
 <br>
 
->RxSwift를 사용하면서 Observable과 Observer의 동작 방식에 대해 명확하게 알게되었고, URLSession, CoreData와 함께 사용하면서 기존에 사용하던 CompletionHandler의 callback 방식에 비해 훨씬 간단하고, 가독성이 높다는 것을 느꼈습니다.
+>RxSwift를 사용하면서 Observable과 Observer의 동작 방식에 대해 명확하게 알게되었고, URLSession, CoreData와 함께 사용하면서 기존에 사용하던 CompletionHandler의 callback 방식에 비해 훨씬 간단하고, 가독성이 높다는 것을 느꼈습니다. <br>
+또한, UI요소에 Observable이 방출하는 데이터를 바인딩하면서 기존에 사용했던 Delegate, Property Observer, NotificationCenter 에 비해 구현이 간단해졌습니다.
