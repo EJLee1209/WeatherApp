@@ -1,6 +1,8 @@
 ## Weather App
 
 ![Simulator Screenshot - iPhone 14 Pro - 2023-08-17 at 14 28 46](https://github.com/EJLee1209/WeatherApp/assets/101651909/6ed2cabd-7ab9-41f7-a9e1-bc3a20d183a9) | ![Simulator Screenshot - iPhone 14 Pro - 2023-08-17 at 14 29 05](https://github.com/EJLee1209/WeatherApp/assets/101651909/ee669706-140a-43c2-88fb-8427b8c1b9ef)
+---|---|
+
 
 <img src="https://velog.velcdn.com/images/syong_e/post/afb45b67-e0b6-4835-9d55-f33912d35cba/image.gif" width=180/>
 
