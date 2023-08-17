@@ -4,8 +4,8 @@
 
 아이폰 기본 앱인 날씨 앱을 클론 코딩하는 토이 프로젝트입니다.
 현재 위치 또는 원하는 위치 기반의 날씨 예보를 확인할 수 있습니다.
-
-날씨 데이터는 Open Weather API를 사용했습니다.
+\n
+날씨 데이터는 Open Weather API를 사용했습니다.\n
 https://openweathermap.org/api
 
 
