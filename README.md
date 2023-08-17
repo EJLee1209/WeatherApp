@@ -1,10 +1,7 @@
 ## Weather App
 
-![Simulator Screenshot - iPhone 14 Pro - 2023-08-17 at 14 28 46](https://github.com/EJLee1209/WeatherApp/assets/101651909/6ed2cabd-7ab9-41f7-a9e1-bc3a20d183a9) | ![Simulator Screenshot - iPhone 14 Pro - 2023-08-17 at 14 29 05](https://github.com/EJLee1209/WeatherApp/assets/101651909/ee669706-140a-43c2-88fb-8427b8c1b9ef)
+<img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/6ed2cabd-7ab9-41f7-a9e1-bc3a20d183a9" width=180/> | <img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/ee669706-140a-43c2-88fb-8427b8c1b9ef" width=180/>
 ---|---|
-
-
-<img src="https://velog.velcdn.com/images/syong_e/post/afb45b67-e0b6-4835-9d55-f33912d35cba/image.gif" width=180/>
 
 아이폰 기본 앱인 날씨 앱을 클론 코딩하는 토이 프로젝트입니다. <br>
 현재 위치 또는 원하는 위치 기반의 날씨 예보를 확인할 수 있습니다. <br>
