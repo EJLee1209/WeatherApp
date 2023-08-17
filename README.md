@@ -24,6 +24,7 @@ https://openweathermap.org/api
 - Snapkit
 - MapKit
 - CoreData
+- URLSession
 - MVVM Pattern
 - Coordinator Pattern
 
