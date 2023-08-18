@@ -25,8 +25,7 @@ https://openweathermap.org/api
 - MapKit
 - CoreData
 - URLSession
-- MVVM Pattern
-- Coordinator Pattern
+- MVVM-C
 
 ## 👨‍💻 프로젝트 회고
 
