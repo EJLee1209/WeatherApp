@@ -1,6 +1,6 @@
 ## Weather App
 
-<img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/6ed2cabd-7ab9-41f7-a9e1-bc3a20d183a9" width=180/> | <img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/ee669706-140a-43c2-88fb-8427b8c1b9ef" width=180/>
+<img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/6ed2cabd-7ab9-41f7-a9e1-bc3a20d183a9"/> | <img src="https://github.com/EJLee1209/WeatherApp/assets/101651909/ee669706-140a-43c2-88fb-8427b8c1b9ef"/>
 ---|---|
 
 아이폰 기본 앱인 날씨 앱을 클론 코딩하는 토이 프로젝트입니다. <br>
